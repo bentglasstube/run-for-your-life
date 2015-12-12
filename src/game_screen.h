@@ -27,6 +27,7 @@ class GameScreen : public Screen {
     boost::scoped_ptr<Player> player;
     boost::scoped_ptr<Text> text;
     float distance;
+    int score;
     ObjectSet objects;
     noise::module::Perlin perlin;
 };

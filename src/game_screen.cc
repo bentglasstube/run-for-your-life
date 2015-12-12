@@ -4,6 +4,7 @@
 #include <math.h>
 
 #include "audio.h"
+#include "fish.h"
 #include "graphics.h"
 #include "input.h"
 #include "rock.h"
@@ -48,22 +49,29 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
 
     if (obj->get_y() < 0) {
       erase = true;
-    }
-
-    if (obj->is_touching(kPlayerX, kPlayerY)) {
-      player->set_vy(-vy);
+    } else if (obj->is_touching(kPlayerX, kPlayerY)) {
+      if (ISA(obj, Rock)) {
+        player->set_vy(-vy);
+      } else if (ISA(obj, Fish)) {
+        erase = true;
+        score += 100;
+      }
     }
 
     if (erase) i = objects.erase(i);
     else ++i;
   }
 
-  // TODO generate new objects
   if (rand() % 100 < elapsed) {
     int x = rand() % (Graphics::kWidth * 2) - Graphics::kWidth / 2;
     int y = Graphics::kHeight + 16;
 
-    objects.push_back(boost::shared_ptr<Object>(new Rock(x, y)));
+    int r = rand() % 8;
+    if (r < 1) {
+      objects.push_back(boost::shared_ptr<Object>(new Fish(x, y)));
+    } else {
+      objects.push_back(boost::shared_ptr<Object>(new Rock(x, y)));
+    }
   }
 
   return true;
@@ -87,8 +95,6 @@ void GameScreen::draw(Graphics& graphics) {
     (*i)->draw(graphics);
   }
 
-  text->draw(graphics, boost::str(boost::format("Distance: % 9um") % distance), 0, 0);
-  int score = 123456;
-  text->draw(graphics, boost::str(boost::format("% 9u") % score), Graphics::kWidth, 0, Text::Alignment::RIGHT);
+  text->draw(graphics, boost::str(boost::format("% 9u") % (score + (int)distance)), Graphics::kWidth, 0, Text::Alignment::RIGHT);
 
 }
