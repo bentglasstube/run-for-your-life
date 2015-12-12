@@ -1,8 +1,11 @@
 #pragma once
 
+#include <boost/shared_ptr.hpp>
+#include <map>
 #include <noise/noise.h>
 
 #include "graphics.h"
+#include "sprite.h"
 
 class Map {
   public:
@@ -18,5 +21,6 @@ class Map {
   private:
 
     noise::module::Perlin perlin;
+    std::map<Terrain, boost::shared_ptr<Sprite>> sprites;
 
 };

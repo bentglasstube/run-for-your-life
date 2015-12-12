@@ -6,6 +6,10 @@ namespace {
 }
 
 Map::Map() {
+  // TODO use masking or something to make sprites less terrible?
+  sprites[SNOW]  = boost::shared_ptr<Sprite>(new Sprite("sprites",  0, 0, kDrawScale, kDrawScale));
+  sprites[ICE]   = boost::shared_ptr<Sprite>(new Sprite("sprites", 16, 0, kDrawScale, kDrawScale));
+  sprites[WATER] = boost::shared_ptr<Sprite>(new Sprite("sprites", 32, 0, kDrawScale, kDrawScale));
 }
 
 Map::Terrain Map::get(float x, float y) {
@@ -34,13 +38,12 @@ void Map::draw(Graphics& graphics, float dx, float dy) {
           graphics.rect(rx, ry, kDrawScale, kDrawScale, 255, 255, 255);
           break;
         case ICE:
-          graphics.rect(rx, ry, kDrawScale, kDrawScale, 224, 225, 255);
+          graphics.rect(rx, ry, kDrawScale, kDrawScale, 95, 205, 228);
           break;
         case WATER:
-          graphics.rect(rx, ry, kDrawScale, kDrawScale, 64, 64, 255);
+          graphics.rect(rx, ry, kDrawScale, kDrawScale, 91, 110, 225);
           break;
       }
     }
   }
-
 }
