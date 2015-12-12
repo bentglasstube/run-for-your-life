@@ -1,7 +1,7 @@
 OBJDIR = build
 SRCDIR = src
-EXECUTABLE = base.exe
-PACKAGE = base.zip
+EXECUTABLE = ld34.exe
+PACKAGE = ld34.zip
 
 all: $(EXECUTABLE)
 
