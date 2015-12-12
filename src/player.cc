@@ -15,8 +15,24 @@ float _clip_vel(float vel, float max) {
   return vel;
 }
 
-void Player::update(unsigned int elapsed) {
-  for (unsigned int i = 0; i < elapsed; ++i) vx *= 0.995f;
+void Player::update(unsigned int elapsed, Map::Terrain terrain) {
+  float friction = 0.0;
+  switch (terrain) {
+    case Map::SNOW:
+      friction = 0.995f;
+      break;
+    case Map::ICE:
+      friction = 0.999f;
+      break;
+    case Map::WATER:
+      friction = 0.990f;
+      break;
+  }
+
+  for (unsigned int i = 0; i < elapsed; ++i) {
+    vx *= friction;
+    vy *= friction;
+  }
 
   vx = _clip_vel(vx + ax * elapsed, kMaxVel);
   vy = _clip_vel(vy + kAccelY * elapsed, kMaxVel);

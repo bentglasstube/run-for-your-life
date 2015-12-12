@@ -33,7 +33,7 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
   if (input.key_held(SDLK_d)) ax += kPlayerAccel;
   player->set_ax(ax);
 
-  player->update(elapsed);
+  player->update(elapsed, map.get(kPlayerX + x_offset, kPlayerY + distance));
 
   float vx = player->get_vx();
   float vy = player->get_vy();
@@ -91,4 +91,13 @@ void GameScreen::draw(Graphics& graphics) {
 
   text->draw(graphics, boost::str(boost::format("% 9u") % (score + (int)(distance / 100))), Graphics::kWidth, 0, Text::Alignment::RIGHT);
 
+  // TODO remove
+  char t = '?';
+  switch (map.get(kPlayerX + x_offset, kPlayerY + distance)) {
+    case Map::SNOW:  t = 'S'; break;
+    case Map::ICE:   t = 'I'; break;
+    case Map::WATER: t = 'W'; break;
+  }
+
+  text->draw(graphics, boost::str(boost::format("%c") % t), 0, 0);
 }

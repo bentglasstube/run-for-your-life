@@ -2,6 +2,7 @@
 
 #include <boost/scoped_ptr.hpp>
 
+#include "map.h"
 #include "sprite.h"
 
 class Player {
@@ -9,7 +10,7 @@ class Player {
 
     Player();
 
-    void update(unsigned int elapsed);
+    void update(unsigned int elapsed, Map::Terrain terrain);
     void draw(Graphics& graphics, int x, int y);
 
     void set_vx(float _vx) { vx = _vx; }
