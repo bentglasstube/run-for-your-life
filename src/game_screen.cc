@@ -52,6 +52,8 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
     } else if (obj->is_touching(kPlayerX, kPlayerY)) {
       if (ISA(obj, Rock)) {
         player->set_vy(-vy);
+        player->set_vx(obj->get_x() > kPlayerX ? -1.0f : 1.0f);
+        score -= 25;
       } else if (ISA(obj, Fish)) {
         erase = true;
         score += 100;
