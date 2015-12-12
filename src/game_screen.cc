@@ -88,7 +88,7 @@ void GameScreen::draw(Graphics& graphics) {
   }
 
   text->draw(graphics, boost::str(boost::format("Distance: % 9um") % distance), 0, 0);
+  int score = 123456;
+  text->draw(graphics, boost::str(boost::format("% 9u") % score), Graphics::kWidth, 0, Text::Alignment::RIGHT);
 
-  text->draw(graphics, boost::str(boost::format("Vel: %f %f") % player->get_vx() % player->get_vy()), 0, 16);
-  text->draw(graphics, boost::str(boost::format("Acc: %f") % player->get_ax()), 0, 32);
 }
