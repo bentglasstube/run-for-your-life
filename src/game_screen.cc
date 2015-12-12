@@ -25,7 +25,7 @@ void GameScreen::init() {
   objects = ObjectSet();
 }
 
-bool GameScreen::update(Input& input, Audio& audio, Graphics& graphics, unsigned int elapsed) {
+bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
   float ax = 0.0f;
   if (input.key_held(SDLK_a)) ax -= kPlayerAccel;
   if (input.key_held(SDLK_d)) ax += kPlayerAccel;

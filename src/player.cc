@@ -16,7 +16,7 @@ float _clip_vel(float vel, float max) {
 }
 
 void Player::update(unsigned int elapsed) {
-  for (int i = 0; i < elapsed; ++i) vx *= 0.995f;
+  for (unsigned int i = 0; i < elapsed; ++i) vx *= 0.995f;
 
   vx = _clip_vel(vx + ax * elapsed, kMaxVel);
   vy = _clip_vel(vy + kAccelY * elapsed, kMaxVel);
