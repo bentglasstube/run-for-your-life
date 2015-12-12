@@ -24,10 +24,11 @@ class GameScreen : public Screen {
 
     typedef std::vector<boost::shared_ptr<Object>> ObjectSet;
 
-    boost::scoped_ptr<Player> player;
-    boost::scoped_ptr<Text> text;
     float distance;
     int score;
+
+    boost::scoped_ptr<Player> player;
+    boost::scoped_ptr<Text> text;
     ObjectSet objects;
     noise::module::Perlin perlin;
 };

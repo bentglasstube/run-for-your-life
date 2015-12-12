@@ -1,7 +1,5 @@
 #include "graphics.h"
 
-#include <SDL2/SDL2_gfxPrimitives.h>
-
 #include "game.h"
 
 Graphics::Graphics() {
