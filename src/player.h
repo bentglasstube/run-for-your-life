@@ -1,0 +1,29 @@
+#pragma once
+
+#include <boost/scoped_ptr.hpp>
+
+#include "sprite.h"
+
+class Player {
+  public:
+
+    Player();
+
+    void update(unsigned int elapsed);
+    void draw(Graphics& graphics, int x, int y);
+
+    void set_vx(float _vx) { vx = _vx; }
+    void set_vy(float _vy) { vy = _vy; }
+    void set_ax(float _ax) { ax = _ax; }
+
+    float get_ax() { return ax; }
+    float get_vx() { return vx; }
+    float get_vy() { return vy; }
+
+  private:
+
+    float ax;
+    float vx, vy;
+
+    boost::scoped_ptr<Sprite> sprite;
+};

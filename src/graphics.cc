@@ -1,20 +1,18 @@
 #include "graphics.h"
 
+#include <SDL2/SDL2_gfxPrimitives.h>
+
 #include "game.h"
 
-namespace {
-  const unsigned int width = 640;
-  const unsigned int height = 480;
-}
-
 Graphics::Graphics() {
-  int flags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_FULLSCREEN_DESKTOP;
+  // int flags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_FULLSCREEN_DESKTOP;
+  int flags = SDL_WINDOW_OPENGL;
 
-  window = SDL_CreateWindow("Ludum Dare", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
+  window = SDL_CreateWindow("Ludum Dare", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, kWidth, kHeight, flags);
   renderer = SDL_CreateRenderer(window, -1, 0);
 
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest"); // retro!
-  SDL_RenderSetLogicalSize(renderer, width, height);
+  SDL_RenderSetLogicalSize(renderer, kWidth, kHeight);
 }
 
 Graphics::~Graphics() {
@@ -36,7 +34,7 @@ void Graphics::flip() {
 }
 
 void Graphics::clear() {
-  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+  SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
   SDL_RenderClear(renderer);
 }
 
