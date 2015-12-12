@@ -6,7 +6,7 @@ namespace {
 }
 
 Player::Player() : ax(0), vx(0), vy(0) {
-  sprite.reset(new Sprite("sprites", 48, 0, 16, 16));
+  sprite.reset(new Sprite("sprites", 0, 0, kSize, kSize));
 }
 
 float _clip_vel(float vel, float max) {
@@ -39,6 +39,6 @@ void Player::update(unsigned int elapsed, Map::Terrain terrain) {
 }
 
 void Player::draw(Graphics& graphics, int x, int y) {
-  sprite->draw(graphics, x, y);
+  sprite->draw(graphics, x - kSize / 2, y - kSize / 2);
 }
 
