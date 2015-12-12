@@ -7,7 +7,7 @@ CC=clang++
 CFLAGS=-g --std=c++14
 CFLAGS+=-Wall -Wextra -Werror
 
-LDLIBS=`sdl2-config --cflags --libs` -lSDL2_mixer
+LDLIBS=`sdl2-config --cflags --libs` -lSDL2_mixer -lnoise
 
 EXECUTABLE=$(BUILDDIR)/game
 

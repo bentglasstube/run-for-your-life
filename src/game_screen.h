@@ -2,6 +2,7 @@
 
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
+#include <noise/noise.h>
 #include <vector>
 
 #include "object.h"
@@ -27,4 +28,5 @@ class GameScreen : public Screen {
     boost::scoped_ptr<Text> text;
     float distance;
     ObjectSet objects;
+    noise::module::Perlin perlin;
 };

@@ -1,6 +1,7 @@
 #include "game_screen.h"
 
 #include <boost/format.hpp>
+#include <math.h>
 
 #include "audio.h"
 #include "graphics.h"
@@ -69,7 +70,18 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
 }
 
 void GameScreen::draw(Graphics& graphics) {
-  player->draw(graphics, Graphics::kWidth / 2 - 8, Graphics::kHeight / 2 - 8);
+  // TODO this doesn't fucking work at all
+  /*
+  int yo = fmodf(distance * 16, 16.0f);
+  for (int y = 0; y <= Graphics::kHeight; y += 16) {
+    for (int x = 0; x < Graphics::kWidth; x += 16) {
+      Uint8 c = perlin.GetValue(x, y - yo + floor(distance * 16), 0) * 64 + 128;
+      graphics.rect(x, y - yo, 16, 16, c, c, 255);
+    }
+  }
+  */
+
+  player->draw(graphics, kPlayerX - 8, kPlayerY - 8);
 
   for (ObjectSet::iterator i = objects.begin(); i != objects.end(); ++i) {
     (*i)->draw(graphics);
