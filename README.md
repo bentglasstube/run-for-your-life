@@ -1,3 +1,7 @@
-# SDL Base
+# Penguin
 
-My base code for Ludum Dare games made with SDL.
+You are a penguin.
+
+Avoid the rocks.  Collect the fish.
+
+A to run left, D to run right.
