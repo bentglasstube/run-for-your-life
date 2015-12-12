@@ -81,28 +81,7 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
 }
 
 void GameScreen::draw(Graphics& graphics) {
-  const int draw_scale = 4;
-  const float noise_scale = 500.0f;
-
-  const int yo = fmodf(distance * draw_scale, draw_scale);
-  const int xo = fmodf(x_offset * draw_scale, draw_scale);
-
-  for (int y = 0; y <= Graphics::kHeight; y += draw_scale) {
-    for (int x = 0; x <= Graphics::kWidth; x += draw_scale) {
-      float n = perlin.GetValue((x - xo + x_offset) / noise_scale, (y - yo + distance) / noise_scale, 0);
-
-      int rx = x - xo;
-      int ry = y - yo;
-
-      if (n > 0) { // SNOW
-        graphics.rect(rx, ry, draw_scale, draw_scale, 255, 255, 255);
-      } else if (n > -0.75f) { // ICE
-        graphics.rect(rx, ry, draw_scale, draw_scale, 224, 225, 255);
-      } else {
-        graphics.rect(rx, ry, draw_scale, draw_scale, 64, 64, 255);
-      }
-    }
-  }
+  map.draw(graphics, x_offset, distance);
 
   player->draw(graphics, kPlayerX - 8, kPlayerY - 8);
 

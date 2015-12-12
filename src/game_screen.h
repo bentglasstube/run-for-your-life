@@ -2,9 +2,9 @@
 
 #include <boost/scoped_ptr.hpp>
 #include <boost/shared_ptr.hpp>
-#include <noise/noise.h>
 #include <vector>
 
+#include "map.h"
 #include "object.h"
 #include "player.h"
 #include "screen.h"
@@ -30,5 +30,5 @@ class GameScreen : public Screen {
     boost::scoped_ptr<Player> player;
     boost::scoped_ptr<Text> text;
     ObjectSet objects;
-    noise::module::Perlin perlin;
+    Map map;
 };
