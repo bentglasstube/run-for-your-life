@@ -24,7 +24,7 @@ class GameScreen : public Screen {
 
     typedef std::vector<boost::shared_ptr<Object>> ObjectSet;
 
-    float distance;
+    float distance, x_offset;
     int score;
 
     boost::scoped_ptr<Player> player;

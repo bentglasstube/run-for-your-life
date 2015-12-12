@@ -41,8 +41,8 @@ void Graphics::rect(int x, int y, int w, int h, Uint8 r, Uint8 g, Uint8 b) {
   SDL_SetRenderDrawColor(renderer, r, g, b, 255);
   SDL_RenderFillRect(renderer, &rect);
 
-  SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-  SDL_RenderDrawRect(renderer, &rect);
+  /* SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); */
+  /* SDL_RenderDrawRect(renderer, &rect); */
 }
 
 SDL_Texture* Graphics::load_image(const std::string& file) {
