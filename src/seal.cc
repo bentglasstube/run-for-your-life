@@ -13,7 +13,7 @@ namespace {
   const float kMaxVel = 0.25f;
 }
 
-Seal::Seal(float x, float y) : Object(x, y) {
+Seal::Seal(float x, float y) : Object(x, y), vx(0), vy(0), ax(0), ay(0) {
   walking.reset(new AnimatedSprite("sprites", 0, 96, kWidth, kHeight, 4, 8));
   swimming.reset(new AnimatedSprite("sprites", 0, 128, 32, 16, 4, 8));
 }
