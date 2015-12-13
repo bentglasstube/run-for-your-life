@@ -16,10 +16,11 @@ Map::Terrain Map::get(int x, int y) {
 
   const float n = perlin.GetValue(nx, ny, seed);
 
-  // TODO determine formulas for increasing difficulty
+  const float snow = ny * kNoiseScale / 50000.0f;
+  const float ice  = ny * kNoiseScale / 125000.0f - 0.75f;
 
-  if (n > 0) return Map::SNOW;
-  if (n > -0.75) return Map::ICE;
+  if (n > snow) return Map::SNOW;
+  if (n > ice) return Map::ICE;
   return Map::WATER;
 }
 
