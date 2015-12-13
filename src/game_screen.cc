@@ -27,7 +27,7 @@ void GameScreen::init() {
   objects = ObjectSet();
 }
 
-bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
+bool GameScreen::update(Input& input, Audio& audio, Graphics&, unsigned int elapsed) {
   if (dead) return false;
 
   float ax = 0.0f;
@@ -57,14 +57,11 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
       if (ISA(obj, Rock)) {
         player->trip();
         score -= 25;
-        // TODO play bump sound
-        // TODO lose control
-
+        audio.play_sample("hit");
       } else if (ISA(obj, Fish)) {
         keep = false;
         score += 100;
-        // TODO play yum sound
-
+        audio.play_sample("yum");
       } else if (ISA(obj, Seal)) {
         dead = true;
         // TODO play game over sound
@@ -128,14 +125,14 @@ int GameScreen::get_score() {
   return score + (int)(distance / 100);
 }
 
-void GameScreen::spawn_rock(int x, int y){
+void GameScreen::spawn_rock(int x, int y) {
   objects.push_back(boost::shared_ptr<Object>(new Rock(x, y)));
 }
 
-void GameScreen::spawn_fish(int x, int y){
+void GameScreen::spawn_fish(int x, int y) {
   objects.push_back(boost::shared_ptr<Object>(new Fish(x, y)));
 }
 
-void GameScreen::spawn_seal(int x, int y){
+void GameScreen::spawn_seal(int x, int y) {
   objects.push_back(boost::shared_ptr<Object>(new Seal(x, y)));
 }
