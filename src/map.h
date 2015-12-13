@@ -20,7 +20,6 @@ class Map {
 
   private:
 
-    int xo, yo;
-
+    int xo, yo, seed;
     noise::module::Perlin perlin;
 };

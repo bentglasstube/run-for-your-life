@@ -5,13 +5,15 @@ namespace {
   const float kNoiseScale = 500.0f;
 }
 
-Map::Map() : xo(0), yo(0) {}
+Map::Map() : xo(0), yo(0) {
+  seed = rand();
+}
 
 Map::Terrain Map::get(int x, int y) {
   float nx = (x / kDrawScale * kDrawScale + xo) / kNoiseScale;
   float ny = (y / kDrawScale * kDrawScale + yo) / kNoiseScale;
 
-  float n = perlin.GetValue(nx, ny, 0);
+  const float n = perlin.GetValue(nx, ny, seed);
 
   // TODO determine formulas for increasing difficulty
 
