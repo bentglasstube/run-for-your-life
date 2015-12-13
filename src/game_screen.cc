@@ -82,6 +82,15 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
     int y = Graphics::kHeight + 16;
 
     int r = rand() % 32;
+    hist[r]++;
+    histcount++;
+
+    if (histcount % 1000 == 0) {
+      for (int i = 0; i < 32; ++i) {
+        fprintf(stderr, "[%02u]: %u\n", i, hist[i]);
+      }
+    }
+
     switch (map.get(x, y)) {
       case Map::SNOW:
         if (r < 24) spawn_rock(x, y);
