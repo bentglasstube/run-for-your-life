@@ -5,33 +5,31 @@ namespace {
   const float kNoiseScale = 500.0f;
 }
 
-Map::Map() {
-  // TODO use masking or something to make sprites less terrible?
-  sprites[SNOW]  = boost::shared_ptr<Sprite>(new Sprite("sprites",  0, 0, kDrawScale, kDrawScale));
-  sprites[ICE]   = boost::shared_ptr<Sprite>(new Sprite("sprites", 16, 0, kDrawScale, kDrawScale));
-  sprites[WATER] = boost::shared_ptr<Sprite>(new Sprite("sprites", 32, 0, kDrawScale, kDrawScale));
-}
+Map::Map() : xo(0), yo(0) {}
 
-Map::Terrain Map::get(float x, float y) {
-  // TODO memoization for performance if needed
+Map::Terrain Map::get(int x, int y) {
+  float nx = (x / kDrawScale * kDrawScale + xo) / kNoiseScale;
+  float ny = (y / kDrawScale * kDrawScale + yo) / kNoiseScale;
 
-  float n = perlin.GetValue(x / kNoiseScale, y / kNoiseScale, 0);
+  float n = perlin.GetValue(nx, ny, 0);
+
+  // TODO determine formulas for increasing difficulty
 
   if (n > 0) return Map::SNOW;
   if (n > -0.75) return Map::ICE;
   return Map::WATER;
 }
 
-void Map::draw(Graphics& graphics, float dx, float dy) {
-  const int xo = fmodf(dx * kDrawScale, kDrawScale);
-  const int yo = fmodf(dy * kDrawScale, kDrawScale);
+void Map::draw(Graphics& graphics) {
+  const int dx = fmodf(xo * kDrawScale, kDrawScale);
+  const int dy = fmodf(yo * kDrawScale, kDrawScale);
 
   for (int y = 0; y <= Graphics::kHeight; y += kDrawScale) {
     for (int x = 0; x <= Graphics::kWidth; x += kDrawScale) {
-      int rx = x - xo;
-      int ry = y - yo;
+      int rx = x - dx;
+      int ry = y - dy;
 
-      Terrain t = get(rx + dx, ry + dy);
+      Terrain t = get(x, y);
 
       switch (t) {
         case SNOW:

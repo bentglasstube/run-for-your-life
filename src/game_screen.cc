@@ -33,7 +33,9 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
   if (input.key_held(SDLK_d)) ax += kPlayerAccel;
   player->set_ax(ax);
 
-  player->update(elapsed, map.get(kPlayerX + x_offset, kPlayerY + distance));
+  map.set_offsets(x_offset, distance);
+
+  player->update(elapsed, map.get(kPlayerX, kPlayerY));
 
   float vx = player->get_vx();
   float vy = player->get_vy();
@@ -45,7 +47,7 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
   while (i != objects.end()) {
     boost::shared_ptr<Object> obj = *i;
 
-    bool keep = obj->update(elapsed, map.get(obj->get_x() + x_offset, obj->get_y() + distance), vx, vy);
+    bool keep = obj->update(elapsed, map.get(obj->get_x(), obj->get_y()), vx, vy);
 
     if (obj->get_y() < -32) {
       keep = false;
@@ -76,7 +78,7 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
     int y = Graphics::kHeight + 16;
 
     int r = rand() % 32;
-    switch (map.get(x + x_offset, y + distance)) {
+    switch (map.get(x, y)) {
       case Map::SNOW:
         if (r < 24) spawn_rock(x, y);
         else if (r < 28) spawn_fish(x, y);
@@ -98,14 +100,14 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
 }
 
 void GameScreen::draw(Graphics& graphics) {
-  map.draw(graphics, x_offset, distance);
+  map.draw(graphics);
 
   for (ObjectSet::iterator i = objects.begin(); i != objects.end(); ++i) {
     boost::shared_ptr<Object> obj = *i;
-    obj->draw(graphics, map.get(obj->get_x() + x_offset, obj->get_y() + distance));
+    obj->draw(graphics, map.get(obj->get_x(), obj->get_y()));
   }
 
-  if (!dead) player->draw(graphics, map.get(kPlayerX + x_offset, kPlayerY + distance), kPlayerX, kPlayerY);
+  if (!dead) player->draw(graphics, map.get(kPlayerX, kPlayerY), kPlayerX, kPlayerY);
 
   text->draw(graphics, boost::str(boost::format("% 9u") % (score + (int)(distance / 100))), Graphics::kWidth, 0, Text::Alignment::RIGHT);
 }
