@@ -14,6 +14,7 @@
 
 namespace {
   const float kPlayerAccel = 0.0005f;
+  const int kSpawnInterval = 100;
 }
 
 void GameScreen::init() {
@@ -73,7 +74,10 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
     else i = objects.erase(i);
   }
 
-  if (rand() % 100 < elapsed) {
+  spawn_timer += elapsed;
+  if (spawn_timer > kSpawnInterval) {
+    spawn_timer -= kSpawnInterval;
+
     int x = rand() % (Graphics::kWidth * 2) - Graphics::kWidth / 2;
     int y = Graphics::kHeight + 16;
 

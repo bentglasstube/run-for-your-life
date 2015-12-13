@@ -32,7 +32,7 @@ class GameScreen : public Screen {
     void spawn_seal(int x, int y);
 
     float distance, x_offset;
-    int score;
+    int score, spawn_timer;
     bool dead;
 
     boost::scoped_ptr<Player> player;
