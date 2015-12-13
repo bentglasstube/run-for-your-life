@@ -23,6 +23,8 @@ void GameScreen::init() {
   distance = x_offset = 0.0f;
 
   objects = ObjectSet();
+
+  r = Random();
 }
 
 bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
@@ -73,25 +75,25 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
     else i = objects.erase(i);
   }
 
-  if (rand() % 100 < elapsed) {
-    int x = rand() % (Graphics::kWidth * 2) - Graphics::kWidth / 2;
+  if (r.urand(0, 99) < elapsed) {
+    int x = r.rand(-Graphics::kWidth / 2, 3 * Graphics::kWidth / 2);
     int y = Graphics::kHeight + 16;
 
-    int r = rand() % 32;
+    int p = r.rand(0, 31);
     switch (map.get(x, y)) {
       case Map::SNOW:
-        if (r < 24) spawn_rock(x, y);
-        else if (r < 28) spawn_fish(x, y);
+        if (p < 24) spawn_rock(x, y);
+        else if (p < 28) spawn_fish(x, y);
         break;
 
       case Map::ICE:
-        if (r < 16) spawn_rock(x, y);
-        else if (r < 28) spawn_fish(x, y);
-        else if (r < 29) spawn_seal(x, y);
+        if (p < 16) spawn_rock(x, y);
+        else if (p < 28) spawn_fish(x, y);
+        else if (p < 29) spawn_seal(x, y);
         break;
 
       case Map::WATER:
-        if (r < 2) spawn_seal(x, y);
+        if (p < 2) spawn_seal(x, y);
         break;
     }
   }

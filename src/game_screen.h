@@ -7,6 +7,7 @@
 #include "map.h"
 #include "object.h"
 #include "player.h"
+#include "random.h"
 #include "screen.h"
 #include "text.h"
 
@@ -39,4 +40,5 @@ class GameScreen : public Screen {
     boost::scoped_ptr<Text> text;
     ObjectSet objects;
     Map map;
+    Random r;
 };

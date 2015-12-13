@@ -1,11 +1,14 @@
 #include "rock.h"
 
+#include "random.h"
+
 namespace {
   const int kSpriteCount = 8;
 }
 
 Rock::Rock(float x, float y) : Object(x, y) {
-  int i = rand() % kSpriteCount;
+  Random r = Random();
+  int i = r.rand(0, kSpriteCount - 1);
   sprite.reset(new Sprite("sprites", 0 + kSize * (i % 4), 64 + kSize * (i / 4), kSize, kSize));
 }
 

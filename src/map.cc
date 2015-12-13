@@ -1,12 +1,15 @@
 #include "map.h"
 
+#include "random.h"
+
 namespace {
   const int kDrawScale = 4;
   const float kNoiseScale = 500.0f;
 }
 
 Map::Map() : xo(0), yo(0) {
-  seed = rand();
+  Random r = Random();
+  seed = r.randf(0.0f, 1.0f);
 }
 
 Map::Terrain Map::get(int x, int y) {
@@ -33,9 +36,7 @@ void Map::draw(Graphics& graphics) {
       int rx = x - dx;
       int ry = y - dy;
 
-      Terrain t = get(rx, ry);
-
-      switch (t) {
+      switch (get(rx, ry)) {
         case SNOW:
           graphics.rect(rx, ry, kDrawScale, kDrawScale, 255, 255, 255);
           break;
