@@ -83,13 +83,6 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
 
     int r = rand() % 32;
     hist[r]++;
-    histcount++;
-
-    if (histcount % 1000 == 0) {
-      for (int i = 0; i < 32; ++i) {
-        fprintf(stderr, "[%02u]: %u\n", i, hist[i]);
-      }
-    }
 
     switch (map.get(x, y)) {
       case Map::SNOW:
@@ -123,6 +116,10 @@ void GameScreen::draw(Graphics& graphics) {
   if (!dead) player->draw(graphics, map.get(kPlayerX, kPlayerY), kPlayerX, kPlayerY);
 
   text->draw(graphics, boost::str(boost::format("% 9u") % (score + (int)(distance / 100))), Graphics::kWidth, 0, Text::Alignment::RIGHT);
+
+  for (int i = 0; i < 32; ++i) {
+    text->draw(graphics, boost::str(boost::format("%2u: %u") % i % hist[i]), 0, i * 16);
+  }
 }
 
 void GameScreen::spawn_rock(int x, int y){

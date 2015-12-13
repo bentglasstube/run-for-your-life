@@ -35,7 +35,7 @@ class GameScreen : public Screen {
     int score, spawn_timer;
     bool dead;
 
-    int hist[32], histcount;
+    int hist[32];
 
     boost::scoped_ptr<Player> player;
     boost::scoped_ptr<Text> text;
