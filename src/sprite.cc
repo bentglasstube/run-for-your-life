@@ -9,7 +9,7 @@ Sprite::Sprite(const std::string& file, int x, int y, int w, int h) : file(file)
   rect.h = h;
 }
 
-void Sprite::draw(Graphics& graphics, int x, int y) {
+void Sprite::draw(Graphics& graphics, int x, int y, SDL_RendererFlip flip) {
   SDL_Rect dest;
 
   dest.x = x;
@@ -17,5 +17,5 @@ void Sprite::draw(Graphics& graphics, int x, int y) {
   dest.w = rect.w;
   dest.h = rect.h;
 
-  graphics.blit(file, &rect, &dest);
+  graphics.blit(file, &rect, &dest, flip);
 }

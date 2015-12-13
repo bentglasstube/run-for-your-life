@@ -13,7 +13,7 @@ class Graphics {
     static const int kWidth = 640;
     static const int kHeight = 480;
 
-    void blit(const std::string& file, const SDL_Rect* srect, const SDL_Rect* drect);
+    void blit(const std::string& file, const SDL_Rect* srect, const SDL_Rect* drect, const SDL_RendererFlip flip=SDL_FLIP_NONE);
     void flip();
     void clear();
 

@@ -22,9 +22,9 @@ Graphics::~Graphics() {
   SDL_DestroyWindow(window);
 }
 
-void Graphics::blit(const std::string& file, const SDL_Rect* srect, const SDL_Rect* drect) {
+void Graphics::blit(const std::string& file, const SDL_Rect* srect, const SDL_Rect* drect, const SDL_RendererFlip flip) {
   SDL_Texture* texture = load_image(file);
-  SDL_RenderCopy(renderer, texture, srect, drect);
+  SDL_RenderCopyEx(renderer, texture, srect, drect, 0, NULL, flip);
 }
 
 void Graphics::flip() {

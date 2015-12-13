@@ -9,7 +9,7 @@ class AnimatedSprite : public Sprite {
 
     AnimatedSprite(const std::string& file, int x, int y, int w, int h, unsigned int frames, unsigned int fps, LoopType loop = NORMAL);
 
-    void draw(Graphics& graphics, int x, int y);
+    void draw(Graphics& graphics, int x, int y, SDL_RendererFlip flip=SDL_FLIP_NONE);
 
   private:
 
