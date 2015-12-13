@@ -35,8 +35,6 @@ class GameScreen : public Screen {
     int score, spawn_timer;
     bool dead;
 
-    int hist[35];
-
     boost::scoped_ptr<Player> player;
     boost::scoped_ptr<Text> text;
     ObjectSet objects;
