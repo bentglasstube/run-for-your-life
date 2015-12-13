@@ -9,7 +9,7 @@ package: $(PACKAGE)
 
 {$(SRCDIR)}.cc{$(OBJDIR)}.obj:
 	-mkdir $(OBJDIR)
-	cl /c /IC:\Development\boost_1_57_0 /I"C:\Development\SDL2-2.0.3\include" /I"C:\Development\libnoise\include" /Zi /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"build\\" /Fd"build\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt $<
+	cl /c /IC:\Development\boost_1_57_0 /I"C:\Development\SDL2-2.0.3\include" /I"C:\Development\libnoise\include" /D_CRT_SECURE_NO_WARNINGS /Zi /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"build\\" /Fd"build\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt $<
 
 $(OBJDIR)\res.res: res.rc
 	rc /fo $@ res.rc
