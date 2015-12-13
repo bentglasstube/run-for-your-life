@@ -2,6 +2,8 @@
 
 #include <boost/format.hpp>
 #include <SDL2/SDL.h>
+#include <stdlib.h>
+#include <time.h>
 
 #include "audio.h"
 #include "graphics.h"
@@ -16,6 +18,7 @@ namespace {
 }
 
 Game::Game() {
+  srand(static_cast<unsigned int>(time(NULL)));
   SDL_Init(SDL_INIT_EVERYTHING);
 }
 

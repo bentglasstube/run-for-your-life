@@ -1,12 +1,10 @@
 #include "fish.h"
 
 #include "animated_sprite.h"
-#include "random.h"
 
 Fish::Fish(float x, float y) : Object(x, y) {
   sprite.reset(new AnimatedSprite("sprites", 0, 48, kSize, kSize, 4, 8));
-  Random r = Random();
-  dx = r.randf(-0.05f, 0.05f);
+  dx = (float) rand() / (float) RAND_MAX * 0.1f - 0.05f;
 }
 
 bool Fish::update(const unsigned int elapsed, const Map::Terrain t, const float vx, const float vy) {
