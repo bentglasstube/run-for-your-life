@@ -4,7 +4,7 @@ BUILDDIR=build
 OBJECTS=$(patsubst %.cc,$(BUILDDIR)/%.o,$(SOURCES))
 
 CC=clang++
-CFLAGS=-g --std=c++14
+CFLAGS=-O2 -g --std=c++14
 CFLAGS+=-Wall -Wextra -Werror
 
 LDLIBS=`sdl2-config --cflags --libs` -lSDL2_mixer -lnoise
