@@ -22,9 +22,10 @@ void GameOverScreen::init() {
       fscanf(fd, "%s%d\n", &initials, &s);
 
       if (score > s && place > 10) {
-        fprintf(stderr, "Congrats, %u place\n", i);
+        fprintf(stderr, "Congrats, %d - %u place\n", score, i);
         place = i;
         strcpy(top_scores[i].initials, "___");
+        top_scores[i].score = score;
         ++i;
       }
 
@@ -80,7 +81,7 @@ void GameOverScreen::draw(Graphics& graphics) {
   backdrop->draw(graphics);
 
   for (int i = 0; i < 5; ++i) {
-    text->draw(graphics, boost::str(boost::format("%2u %3s %9u") % (i + 1) % top_scores[i].initials % top_scores[i].score), 192, 208 + 16 * i);
+    text->draw(graphics, boost::str(boost::format("%2u %3s %9u") % (i + 1) % top_scores[i].initials % top_scores[i].score), 184, 208 + 16 * i);
     text->draw(graphics, boost::str(boost::format("%2u %3s %9u") % (i + 6) % top_scores[i + 5].initials % top_scores[i + 5].score), 320, 208 + 16 * i);
   }
 

@@ -6,6 +6,7 @@
 #include "input.h"
 
 void TitleScreen::init() {
+  backdrop.reset(new Backdrop("title"));
   text.reset(new Text("text"));
 }
 
@@ -14,7 +15,8 @@ bool TitleScreen::update(Input& input, Audio&, Graphics&, unsigned int) {
 }
 
 void TitleScreen::draw(Graphics& graphics) {
-  text->draw(graphics, "Press any key", 320, 264, Text::CENTER);
+  backdrop->draw(graphics);
+  text->draw(graphics, "Press any key", 320, 432, Text::CENTER);
 }
 
 Screen* TitleScreen::next_screen() {

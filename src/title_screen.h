@@ -2,6 +2,7 @@
 
 #include <boost/scoped_ptr.hpp>
 
+#include "backdrop.h"
 #include "screen.h"
 #include "text.h"
 
@@ -17,5 +18,6 @@ class TitleScreen : public Screen {
 
   private:
 
+    boost::scoped_ptr<Backdrop> backdrop;
     boost::scoped_ptr<Text> text;
 };
