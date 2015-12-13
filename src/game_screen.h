@@ -20,12 +20,14 @@ class GameScreen : public Screen {
     bool update(Input& input, Audio& audio, Graphics& graphics, unsigned int elapsed);
     void draw(Graphics& graphics);
 
-    Screen* next_screen() { return NULL; }
+    Screen* next_screen();
     std::string get_music_track() { return ""; }
 
   private:
 
     typedef std::vector<boost::shared_ptr<Object>> ObjectSet;
+
+    int get_score();
 
     void spawn_rock(int x, int y);
     void spawn_fish(int x, int y);

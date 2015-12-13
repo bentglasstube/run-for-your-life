@@ -5,6 +5,7 @@
 
 #include "audio.h"
 #include "fish.h"
+#include "game_over_screen.h"
 #include "graphics.h"
 #include "input.h"
 #include "rock.h"
@@ -27,7 +28,7 @@ void GameScreen::init() {
 }
 
 bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
-  if (dead) return true;
+  if (dead) return false;
 
   float ax = 0.0f;
   if (input.key_held(SDLK_a)) ax -= kPlayerAccel;
@@ -114,7 +115,17 @@ void GameScreen::draw(Graphics& graphics) {
 
   if (!dead) player->draw(graphics, map.get(kPlayerX, kPlayerY), kPlayerX, kPlayerY);
 
-  text->draw(graphics, boost::str(boost::format("% 9u") % (score + (int)(distance / 100))), Graphics::kWidth, 0, Text::Alignment::RIGHT);
+  text->draw(graphics, boost::str(boost::format("% 9u") % get_score()), Graphics::kWidth, 0, Text::Alignment::RIGHT);
+}
+
+Screen* GameScreen::next_screen() {
+  GameOverScreen* next = new GameOverScreen();
+  next->set_score(get_score());
+  return next;
+}
+
+int GameScreen::get_score() {
+  return score + (int)(distance / 100);
 }
 
 void GameScreen::spawn_rock(int x, int y){
