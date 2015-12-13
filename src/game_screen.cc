@@ -118,18 +118,25 @@ void GameScreen::draw(Graphics& graphics) {
   text->draw(graphics, boost::str(boost::format("% 9u") % (score + (int)(distance / 100))), Graphics::kWidth, 0, Text::Alignment::RIGHT);
 
   for (int i = 0; i < 32; ++i) {
-    text->draw(graphics, boost::str(boost::format("%2u: %u") % i % hist[i]), 0, i * 16);
+    graphics.rect(0, 4 * i, hist[i], 4, 255, 0, 0);
   }
+
+  graphics.rect(0, 132, hist[32], 4, 132, 126, 135);
+  graphics.rect(0, 136, hist[33], 4, 223, 113, 38);
+  graphics.rect(0, 140, hist[34], 4, 50, 60, 57);
 }
 
 void GameScreen::spawn_rock(int x, int y){
   objects.push_back(boost::shared_ptr<Object>(new Rock(x, y)));
+  hist[32]++;
 }
 
 void GameScreen::spawn_fish(int x, int y){
   objects.push_back(boost::shared_ptr<Object>(new Fish(x, y)));
+  hist[33]++;
 }
 
 void GameScreen::spawn_seal(int x, int y){
   objects.push_back(boost::shared_ptr<Object>(new Seal(x, y)));
+  hist[34]++;
 }
