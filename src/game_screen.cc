@@ -99,7 +99,7 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
 void GameScreen::draw(Graphics& graphics) {
   map.draw(graphics, x_offset, distance);
 
-  player->draw(graphics, kPlayerX, kPlayerY);
+  player->draw(graphics, map.get(kPlayerX + x_offset, kPlayerY + distance), kPlayerX, kPlayerY);
 
   for (ObjectSet::iterator i = objects.begin(); i != objects.end(); ++i) {
     (*i)->draw(graphics);

@@ -12,8 +12,8 @@ class Player {
 
     Player();
 
-    void update(unsigned int elapsed, Map::Terrain terrain);
-    void draw(Graphics& graphics, int x, int y);
+    void update(const unsigned int elapsed, const Map::Terrain terrain);
+    void draw(Graphics& graphics, const Map::Terrain terrain, const int x, const int y);
 
     void set_vx(float _vx) { vx = _vx; }
     void set_vy(float _vy) { vy = _vy; }
@@ -28,5 +28,5 @@ class Player {
     float ax;
     float vx, vy;
 
-    boost::scoped_ptr<Sprite> sprite;
+    boost::scoped_ptr<Sprite> walking, swimming, sliding;
 };
