@@ -7,8 +7,16 @@ Fish::Fish(float x, float y) : Object(x, y) {
   dx = (float) rand() / (float) RAND_MAX * 0.1f - 0.05f;
 }
 
-void Fish::update(unsigned int elapsed, float vx, float vy) {
-  Object::update(elapsed, vx + dx, vy);
+bool Fish::update(const unsigned int elapsed, const Map::Terrain t, const float vx, const float vy) {
+  float move = dx;
+
+  switch (t) {
+    case Map::SNOW:  break;
+    case Map::ICE:   move *= 1.5; break;
+    case Map::WATER: return false;
+  }
+
+  return Object::update(elapsed, t, vx + move, vy);
 }
 
 void Fish::draw(Graphics& graphics) {

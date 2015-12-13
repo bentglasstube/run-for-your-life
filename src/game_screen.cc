@@ -38,31 +38,30 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
   float vx = player->get_vx();
   float vy = player->get_vy();
 
-  distance += vy * elapsed;
   x_offset += vx * elapsed;
+  distance += vy * elapsed;
 
   ObjectSet::iterator i = objects.begin();
   while (i != objects.end()) {
     boost::shared_ptr<Object> obj = *i;
-    obj->update(elapsed, vx, vy);
 
-    bool erase = false;
+    bool keep = obj->update(elapsed, map.get(obj->get_x() + x_offset, obj->get_y() + distance), vx, vy);
 
-    if (obj->get_y() < 0) {
-      erase = true;
+    if (obj->get_y() < -32) {
+      keep = false;
     } else if (obj->is_touching(kPlayerX, kPlayerY)) {
       if (ISA(obj, Rock)) {
         player->set_vy(-vy);
         player->set_vx(obj->get_x() > kPlayerX ? -1.0f : 1.0f);
         score -= 25;
       } else if (ISA(obj, Fish)) {
-        erase = true;
+        keep = false;
         score += 100;
       }
     }
 
-    if (erase) i = objects.erase(i);
-    else ++i;
+    if (keep) ++i;
+    else i = objects.erase(i);
   }
 
   if (rand() % 100 < elapsed) {

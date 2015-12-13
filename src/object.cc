@@ -5,9 +5,11 @@
 
 Object::Object(float x, float y) : x(x), y(y) {}
 
-void Object::update(unsigned int elapsed, float vx, float vy) {
+bool Object::update(const unsigned int elapsed, const Map::Terrain, const float vx, const float vy) {
   x -= vx * elapsed;
   y -= vy * elapsed;
+
+  return true;
 }
 
 bool Object::is_touching(float tx, float ty) {

@@ -10,7 +10,7 @@ class Fish : public Object {
 
     Fish(float x, float y);
 
-    void update(unsigned int elapsed, float vx, float vy);
+    bool update(const unsigned int elapsed, const Map::Terrain t, const float vx, const float vy);
     void draw(Graphics& graphics);
 
   private:
