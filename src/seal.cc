@@ -14,7 +14,8 @@ namespace {
 }
 
 Seal::Seal(float x, float y) : Object(x, y) {
-  sprite.reset(new AnimatedSprite("sprites", 0, 96, kWidth, kHeight, 4, 8));
+  walking.reset(new AnimatedSprite("sprites", 0, 96, kWidth, kHeight, 4, 8));
+  swimming.reset(new AnimatedSprite("sprites", 0, 128, 32, 16, 4, 8));
 }
 
 float __clip(const float vel, const float max) {
@@ -51,7 +52,12 @@ bool Seal::update(const unsigned int elapsed, const Map::Terrain t, const float 
   return Object::update(elapsed, t, dx - vx, dy - vy);
 }
 
-void Seal::draw(Graphics& graphics) {
+void Seal::draw(Graphics& graphics, const Map::Terrain t) {
   SDL_RendererFlip flip = facing_left() ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
-  sprite->draw(graphics, x - kWidth / 2, y - kHeight / 2, flip);
+
+  if (t == Map::WATER) {
+    swimming->draw(graphics, x - kWidth / 2, y - kHeight / 2, flip);
+  } else {
+    walking->draw(graphics, x - kWidth / 2, y - kHeight / 2, flip);
+  }
 }

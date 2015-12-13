@@ -11,7 +11,7 @@ class Seal : public Object {
     Seal(float x, float y);
 
     bool update(const unsigned int elapsed, const Map::Terrain t, const float dx, const float dy);
-    void draw(Graphics& graphics);
+    void draw(Graphics& graphics, const Map::Terrain t);
 
     bool facing_left() { return vx < 0; }
 
@@ -19,5 +19,5 @@ class Seal : public Object {
     float vx, vy;
     float ax, ay;
 
-    boost::scoped_ptr<Sprite> sprite;
+    boost::scoped_ptr<Sprite> walking, swimming;
 };

@@ -11,7 +11,7 @@ class Fish : public Object {
     Fish(float x, float y);
 
     bool update(const unsigned int elapsed, const Map::Terrain t, const float vx, const float vy);
-    void draw(Graphics& graphics);
+    void draw(Graphics& graphics, const Map::Terrain t);
 
   private:
     boost::scoped_ptr<Sprite> sprite;

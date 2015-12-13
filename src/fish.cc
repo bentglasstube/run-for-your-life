@@ -19,7 +19,7 @@ bool Fish::update(const unsigned int elapsed, const Map::Terrain t, const float 
   return Object::update(elapsed, t, vx + move, vy);
 }
 
-void Fish::draw(Graphics& graphics) {
+void Fish::draw(Graphics& graphics, const Map::Terrain) {
   SDL_RendererFlip flip = dx > 0 ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
   sprite->draw(graphics, x - kSize / 2, y - kSize / 2, flip);
 }

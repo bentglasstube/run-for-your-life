@@ -26,6 +26,8 @@ void GameScreen::init() {
 }
 
 bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
+  if (dead) return true;
+
   float ax = 0.0f;
   if (input.key_held(SDLK_a)) ax -= kPlayerAccel;
   if (input.key_held(SDLK_d)) ax += kPlayerAccel;
@@ -59,6 +61,9 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
         score += 100;
         // TODO play yum sound
 
+      } else if (ISA(obj, Seal)) {
+        dead = true;
+        // TODO play game over sound
       }
     }
 
@@ -96,10 +101,11 @@ void GameScreen::draw(Graphics& graphics) {
   map.draw(graphics, x_offset, distance);
 
   for (ObjectSet::iterator i = objects.begin(); i != objects.end(); ++i) {
-    (*i)->draw(graphics);
+    boost::shared_ptr<Object> obj = *i;
+    obj->draw(graphics, map.get(obj->get_x() + x_offset, obj->get_y() + distance));
   }
 
-  player->draw(graphics, map.get(kPlayerX + x_offset, kPlayerY + distance), kPlayerX, kPlayerY);
+  if (!dead) player->draw(graphics, map.get(kPlayerX + x_offset, kPlayerY + distance), kPlayerX, kPlayerY);
 
   text->draw(graphics, boost::str(boost::format("% 9u") % (score + (int)(distance / 100))), Graphics::kWidth, 0, Text::Alignment::RIGHT);
 }

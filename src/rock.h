@@ -10,7 +10,7 @@ class Rock : public Object {
 
     Rock(float x, float y);
 
-    void draw(Graphics& graphics);
+    void draw(Graphics& graphics, const Map::Terrain t);
 
   private:
     boost::scoped_ptr<Sprite> sprite;

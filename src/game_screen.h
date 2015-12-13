@@ -33,6 +33,7 @@ class GameScreen : public Screen {
 
     float distance, x_offset;
     int score;
+    bool dead;
 
     boost::scoped_ptr<Player> player;
     boost::scoped_ptr<Text> text;
