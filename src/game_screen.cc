@@ -51,8 +51,7 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
       keep = false;
     } else if (obj->is_touching(kPlayerX, kPlayerY)) {
       if (ISA(obj, Rock)) {
-        player->set_vy(-vy);
-        player->set_vx(obj->get_x() > kPlayerX ? -1.0f : 1.0f);
+        player->trip();
         score -= 25;
         // TODO play bump sound
         // TODO lose control
