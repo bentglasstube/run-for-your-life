@@ -77,7 +77,6 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
       case Map::SNOW:
         if (r < 24) spawn_rock(x, y);
         if (r < 28) spawn_fish(x, y);
-        if (r < 29) spawn_bear(x, y);
         break;
 
       case Map::ICE:
@@ -115,11 +114,6 @@ void GameScreen::spawn_fish(int x, int y){
   objects.push_back(boost::shared_ptr<Object>(new Fish(x, y)));
 }
 
-void GameScreen::spawn_bear(int, int){
-  // objects.push_back(boost::shared_ptr<Object>(new Fish(x, y)));
-}
-
 void GameScreen::spawn_seal(int, int){
   // objects.push_back(boost::shared_ptr<Object>(new Fish(x, y)));
 }
-
