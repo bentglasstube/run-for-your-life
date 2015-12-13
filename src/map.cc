@@ -10,8 +10,9 @@ Map::Map() : xo(0), yo(0) {
 }
 
 Map::Terrain Map::get(int x, int y) {
-  float nx = (x / kDrawScale * kDrawScale + xo) / kNoiseScale;
-  float ny = (y / kDrawScale * kDrawScale + yo) / kNoiseScale;
+  // Integer division here aligns the values to prevent flickering
+  const float nx = (x + xo) / kDrawScale * kDrawScale / kNoiseScale;
+  const float ny = (y + yo) / kDrawScale * kDrawScale / kNoiseScale;
 
   const float n = perlin.GetValue(nx, ny, seed);
 
@@ -31,7 +32,7 @@ void Map::draw(Graphics& graphics) {
       int rx = x - dx;
       int ry = y - dy;
 
-      Terrain t = get(x, y);
+      Terrain t = get(rx, ry);
 
       switch (t) {
         case SNOW:
