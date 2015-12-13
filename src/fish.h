@@ -10,9 +10,10 @@ class Fish : public Object {
 
     Fish(float x, float y);
 
-    // void update(); // TODO
+    void update(unsigned int elapsed, float vx, float vy);
     void draw(Graphics& graphics);
 
   private:
     boost::scoped_ptr<Sprite> sprite;
+    float dx;
 };
