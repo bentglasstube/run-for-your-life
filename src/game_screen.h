@@ -13,6 +13,9 @@
 class GameScreen : public Screen {
   public:
 
+    static const int kPlayerX = Graphics::kWidth / 2;
+    static const int kPlayerY = Graphics::kHeight / 2;
+
     void init();
     bool update(Input& input, Audio& audio, Graphics& graphics, unsigned int elapsed);
     void draw(Graphics& graphics);

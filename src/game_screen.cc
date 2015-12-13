@@ -8,14 +8,12 @@
 #include "graphics.h"
 #include "input.h"
 #include "rock.h"
+#include "seal.h"
 
 #define ISA(obj, type) boost::dynamic_pointer_cast<type>(obj)
 
 namespace {
   const float kPlayerAccel = 0.0005f;
-
-  const float kPlayerX = Graphics::kWidth / 2;
-  const float kPlayerY = Graphics::kHeight / 2;
 }
 
 void GameScreen::init() {
@@ -76,17 +74,17 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
     switch (map.get(x + x_offset, y + distance)) {
       case Map::SNOW:
         if (r < 24) spawn_rock(x, y);
-        if (r < 28) spawn_fish(x, y);
+        else if (r < 28) spawn_fish(x, y);
         break;
 
       case Map::ICE:
-        if (r < 12) spawn_rock(x, y);
-        if (r < 16) spawn_fish(x, y);
-        if (r < 18) spawn_seal(x, y);
+        if (r < 16) spawn_rock(x, y);
+        else if (r < 28) spawn_fish(x, y);
+        else if (r < 29) spawn_seal(x, y);
         break;
 
       case Map::WATER:
-        if (r < 4) spawn_seal(x, y);
+        if (r < 2) spawn_seal(x, y);
         break;
     }
   }
@@ -114,6 +112,6 @@ void GameScreen::spawn_fish(int x, int y){
   objects.push_back(boost::shared_ptr<Object>(new Fish(x, y)));
 }
 
-void GameScreen::spawn_seal(int, int){
-  // objects.push_back(boost::shared_ptr<Object>(new Fish(x, y)));
+void GameScreen::spawn_seal(int x, int y){
+  objects.push_back(boost::shared_ptr<Object>(new Seal(x, y)));
 }
