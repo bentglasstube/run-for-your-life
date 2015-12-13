@@ -17,5 +17,7 @@ class Object {
 
   protected:
 
+    static const int kSize = 16;
+
     float x, y;
 };

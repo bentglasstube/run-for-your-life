@@ -1,10 +1,7 @@
 #include "rock.h"
 
-#include "player.h"
-
 namespace {
   const int kSpriteCount = 8;
-  const int kSize = 16;
 }
 
 Rock::Rock(float x, float y) : Object(x, y) {
@@ -14,11 +11,4 @@ Rock::Rock(float x, float y) : Object(x, y) {
 
 void Rock::draw(Graphics& graphics) {
   sprite->draw(graphics, x - kSize / 2, y - kSize / 2);
-}
-
-bool Rock::is_touching(float tx, float ty) {
-  float dx = x - tx;
-  float dy = y - ty;
-  int r = (kSize + Player::kSize) / 3;
-  return dx * dx + dy * dy < r * r;
 }

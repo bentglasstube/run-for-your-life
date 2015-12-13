@@ -12,8 +12,6 @@ class Rock : public Object {
 
     void draw(Graphics& graphics);
 
-    bool is_touching(float tx, float ty);
-
   private:
     boost::scoped_ptr<Sprite> sprite;
 };
