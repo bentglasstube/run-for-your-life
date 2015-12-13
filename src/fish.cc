@@ -13,7 +13,7 @@ bool Fish::update(const unsigned int elapsed, const Map::Terrain t, const float 
   switch (t) {
     case Map::SNOW:  break;
     case Map::ICE:   move *= 1.5; break;
-    case Map::WATER: return false;
+    case Map::WATER: return false; // TODO play splash sound
   }
 
   return Object::update(elapsed, t, vx + move, vy);

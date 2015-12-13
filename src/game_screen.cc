@@ -54,9 +54,14 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
         player->set_vy(-vy);
         player->set_vx(obj->get_x() > kPlayerX ? -1.0f : 1.0f);
         score -= 25;
+        // TODO play bump sound
+        // TODO lose control
+
       } else if (ISA(obj, Fish)) {
         keep = false;
         score += 100;
+        // TODO play yum sound
+
       }
     }
 
@@ -68,11 +73,23 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
     int x = rand() % (Graphics::kWidth * 2) - Graphics::kWidth / 2;
     int y = Graphics::kHeight + 16;
 
-    int r = rand() % 8;
-    if (r < 1) {
-      objects.push_back(boost::shared_ptr<Object>(new Fish(x, y)));
-    } else {
-      objects.push_back(boost::shared_ptr<Object>(new Rock(x, y)));
+    int r = rand() % 32;
+    switch (map.get(x + x_offset, y + distance)) {
+      case Map::SNOW:
+        if (r < 24) spawn_rock(x, y);
+        if (r < 28) spawn_fish(x, y);
+        if (r < 29) spawn_bear(x, y);
+        break;
+
+      case Map::ICE:
+        if (r < 12) spawn_rock(x, y);
+        if (r < 16) spawn_fish(x, y);
+        if (r < 18) spawn_seal(x, y);
+        break;
+
+      case Map::WATER:
+        if (r < 4) spawn_seal(x, y);
+        break;
     }
   }
 
@@ -100,3 +117,20 @@ void GameScreen::draw(Graphics& graphics) {
 
   text->draw(graphics, boost::str(boost::format("%c") % t), 0, 0);
 }
+
+void GameScreen::spawn_rock(int x, int y){
+  objects.push_back(boost::shared_ptr<Object>(new Rock(x, y)));
+}
+
+void GameScreen::spawn_fish(int x, int y){
+  objects.push_back(boost::shared_ptr<Object>(new Fish(x, y)));
+}
+
+void GameScreen::spawn_bear(int, int){
+  // objects.push_back(boost::shared_ptr<Object>(new Fish(x, y)));
+}
+
+void GameScreen::spawn_seal(int, int){
+  // objects.push_back(boost::shared_ptr<Object>(new Fish(x, y)));
+}
+
