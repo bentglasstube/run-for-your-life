@@ -90,11 +90,10 @@ bool GameScreen::update(Input& input, Audio& audio, Graphics&, unsigned int elap
       case Map::ICE:
         if (r < 16) spawn_rock(x, y);
         else if (r < 28) spawn_fish(x, y);
-        else if (r < 29) spawn_seal(x, y);
         break;
 
       case Map::WATER:
-        if (r < 2) spawn_seal(x, y);
+        if (r < 1) spawn_seal(x, y);
         break;
     }
   }
