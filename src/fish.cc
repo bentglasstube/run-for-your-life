@@ -7,16 +7,21 @@ Fish::Fish(float x, float y) : Object(x, y) {
   dx = (float) rand() / (float) RAND_MAX * 0.1f - 0.05f;
 }
 
-bool Fish::update(const unsigned int elapsed, const Map::Terrain t, const float vx, const float vy) {
+bool Fish::update(const unsigned int elapsed, Audio& audio, const Map::Terrain t, const float vx, const float vy) {
   float move = dx;
 
   switch (t) {
-    case Map::SNOW:  break;
-    case Map::ICE:   move *= 1.5; break;
-    case Map::WATER: return false; // TODO play splash sound
+    case Map::SNOW:
+      break;
+    case Map::ICE:
+      move *= 1.5;
+      break;
+    case Map::WATER:
+      audio.play_sample("splash");
+      return false;
   }
 
-  return Object::update(elapsed, t, vx + move, vy);
+  return Object::update(elapsed, audio, t, vx + move, vy);
 }
 
 void Fish::draw(Graphics& graphics, const Map::Terrain) {

@@ -10,7 +10,7 @@ class Seal : public Object {
 
     Seal(float x, float y);
 
-    bool update(const unsigned int elapsed, const Map::Terrain t, const float dx, const float dy);
+    bool update(const unsigned int elapsed, Audio& audio, const Map::Terrain t, const float dx, const float dy);
     void draw(Graphics& graphics, const Map::Terrain t);
 
     bool facing_left() { return vx < 0; }
@@ -18,6 +18,7 @@ class Seal : public Object {
   private:
     float vx, vy;
     float ax, ay;
+    int bark_timer;
 
     boost::scoped_ptr<Sprite> walking, swimming;
 };

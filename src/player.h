@@ -2,6 +2,7 @@
 
 #include <boost/scoped_ptr.hpp>
 
+#include "audio.h"
 #include "map.h"
 #include "sprite.h"
 
@@ -12,7 +13,7 @@ class Player {
 
     Player();
 
-    void update(const unsigned int elapsed, const Map::Terrain terrain);
+    void update(const unsigned int elapsed, const Map::Terrain terrain, Audio& audio);
     void draw(Graphics& graphics, const Map::Terrain terrain, const int x, const int y);
 
     void trip();
@@ -29,6 +30,7 @@ class Player {
 
     float ax, vx, vy;
     bool tripping;
+    Map::Terrain last_tile;
 
     boost::scoped_ptr<Sprite> walking, swimming, sliding;
 };

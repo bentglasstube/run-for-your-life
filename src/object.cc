@@ -5,7 +5,7 @@
 
 Object::Object(float x, float y) : x(x), y(y) {}
 
-bool Object::update(const unsigned int elapsed, const Map::Terrain, const float vx, const float vy) {
+bool Object::update(const unsigned int elapsed, Audio&,  const Map::Terrain, const float vx, const float vy) {
   x -= vx * elapsed;
   y -= vy * elapsed;
 

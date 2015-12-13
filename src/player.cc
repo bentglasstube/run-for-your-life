@@ -7,7 +7,7 @@ namespace {
   const float kMaxVel = 0.2f;
 }
 
-Player::Player() : ax(0), vx(0), vy(0), tripping(false) {
+Player::Player() : ax(0), vx(0), vy(0), tripping(false), last_tile(Map::SNOW) {
   walking.reset(new AnimatedSprite("sprites", 0, 0, kSize, kSize, 3, 16, AnimatedSprite::BOUNCE));
   swimming.reset(new AnimatedSprite("sprites", 0, 32, kSize, kSize / 2, 2, 16));
   sliding.reset(new Sprite("sprites", 96, 0, kSize, kSize));
@@ -19,7 +19,7 @@ float _clip_vel(const float vel, const float max) {
   return vel;
 }
 
-void Player::update(const unsigned int elapsed, const Map::Terrain terrain) {
+void Player::update(const unsigned int elapsed, const Map::Terrain terrain, Audio& audio) {
   float friction = 0.0;
   switch (terrain) {
     case Map::SNOW:
@@ -44,6 +44,9 @@ void Player::update(const unsigned int elapsed, const Map::Terrain terrain) {
     vx = _clip_vel(vx + ax * elapsed, kMaxVel);
     vy = _clip_vel(vy + kAccelY * elapsed, kMaxVel);
   }
+
+  if (terrain == Map::WATER && last_tile != Map::WATER) audio.play_sample("splash");
+  last_tile = terrain;
 }
 
 void Player::draw(Graphics& graphics, const Map::Terrain terrain, const int x, const int y) {

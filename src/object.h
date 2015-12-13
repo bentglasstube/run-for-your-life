@@ -1,5 +1,6 @@
 #pragma once
 
+#include "audio.h"
 #include "graphics.h"
 #include "map.h"
 
@@ -8,7 +9,7 @@ class Object {
 
     Object(float x, float y);
 
-    virtual bool update(const unsigned int elapsed, const Map::Terrain t, const float vx, const float vy);
+    virtual bool update(const unsigned int elapsed, Audio& audio, const Map::Terrain t, const float vx, const float vy);
     virtual void draw(Graphics& graphics, const Map::Terrain t) = 0;
 
     virtual bool is_touching(const float tx, const float ty);

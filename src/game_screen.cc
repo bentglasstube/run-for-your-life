@@ -37,7 +37,7 @@ bool GameScreen::update(Input& input, Audio& audio, Graphics&, unsigned int elap
 
   map.set_offsets(x_offset, distance);
 
-  player->update(elapsed, map.get(kPlayerX, kPlayerY));
+  player->update(elapsed, map.get(kPlayerX, kPlayerY), audio);
 
   float vx = player->get_vx();
   float vy = player->get_vy();
@@ -49,7 +49,7 @@ bool GameScreen::update(Input& input, Audio& audio, Graphics&, unsigned int elap
   while (i != objects.end()) {
     boost::shared_ptr<Object> obj = *i;
 
-    bool keep = obj->update(elapsed, map.get(obj->get_x(), obj->get_y()), vx, vy);
+    bool keep = obj->update(elapsed, audio, map.get(obj->get_x(), obj->get_y()), vx, vy);
 
     if (obj->get_y() < -32) {
       keep = false;
@@ -64,7 +64,7 @@ bool GameScreen::update(Input& input, Audio& audio, Graphics&, unsigned int elap
         audio.play_sample("yum");
       } else if (ISA(obj, Seal)) {
         dead = true;
-        // TODO play game over sound
+        audio.play_sample("eaten");
       }
     }
 
