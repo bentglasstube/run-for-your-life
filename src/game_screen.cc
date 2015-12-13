@@ -98,23 +98,13 @@ bool GameScreen::update(Input& input, Audio&, Graphics&, unsigned int elapsed) {
 void GameScreen::draw(Graphics& graphics) {
   map.draw(graphics, x_offset, distance);
 
-  player->draw(graphics, map.get(kPlayerX + x_offset, kPlayerY + distance), kPlayerX, kPlayerY);
-
   for (ObjectSet::iterator i = objects.begin(); i != objects.end(); ++i) {
     (*i)->draw(graphics);
   }
 
+  player->draw(graphics, map.get(kPlayerX + x_offset, kPlayerY + distance), kPlayerX, kPlayerY);
+
   text->draw(graphics, boost::str(boost::format("% 9u") % (score + (int)(distance / 100))), Graphics::kWidth, 0, Text::Alignment::RIGHT);
-
-  // TODO remove
-  char t = '?';
-  switch (map.get(kPlayerX + x_offset, kPlayerY + distance)) {
-    case Map::SNOW:  t = 'S'; break;
-    case Map::ICE:   t = 'I'; break;
-    case Map::WATER: t = 'W'; break;
-  }
-
-  text->draw(graphics, boost::str(boost::format("%c") % t), 0, 0);
 }
 
 void GameScreen::spawn_rock(int x, int y){
