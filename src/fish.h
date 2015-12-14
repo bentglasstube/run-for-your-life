@@ -16,7 +16,7 @@ class Fish : public Object {
 
   private:
 
-    float dx;
+    float dx, dy;
     int color;
     boost::scoped_ptr<Sprite> sprite;
 
