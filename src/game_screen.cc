@@ -120,6 +120,10 @@ Screen* GameScreen::next_screen() {
   return next;
 }
 
+std::string GameScreen::get_music_track() {
+  return "antarcticbreeze";
+}
+
 int GameScreen::get_score() {
   return score + (int)(distance / 100);
 }
