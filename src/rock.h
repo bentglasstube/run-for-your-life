@@ -11,6 +11,7 @@ class Rock : public Object {
     Rock(float x, float y);
 
     void draw(Graphics& graphics, const Map::Terrain t);
+    void collide(Player& player, Audio& audio);
 
   private:
     boost::scoped_ptr<Sprite> sprite;

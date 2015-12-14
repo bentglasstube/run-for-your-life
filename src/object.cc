@@ -3,13 +3,11 @@
 #include "graphics.h"
 #include "player.h"
 
-Object::Object(float x, float y) : x(x), y(y) {}
+Object::Object(float x, float y) : x(x), y(y), dead(false) {}
 
-bool Object::update(const unsigned int elapsed, Audio&,  const Map::Terrain, const float vx, const float vy) {
+void Object::update(const unsigned int elapsed, Audio&,  const Map::Terrain, const float vx, const float vy) {
   x -= vx * elapsed;
   y -= vy * elapsed;
-
-  return true;
 }
 
 bool Object::is_touching(float tx, float ty) {

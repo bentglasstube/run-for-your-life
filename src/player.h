@@ -17,6 +17,8 @@ class Player {
     void draw(Graphics& graphics, const Map::Terrain terrain, const int x, const int y);
 
     void trip();
+    void kill() { dead = true; }
+    void add_points(int points) { score += points; }
 
     void set_vx(float _vx) { vx = _vx; }
     void set_vy(float _vy) { vy = _vy; }
@@ -26,10 +28,14 @@ class Player {
     float get_vy() { return vy; }
     float get_ax() { return ax; }
 
+    int get_score() { return score; }
+    bool alive() { return !dead; }
+
   private:
 
     float ax, vx, vy;
-    bool tripping;
+    bool tripping, dead;
+    int score;
     Map::Terrain last_tile;
 
     boost::scoped_ptr<Sprite> walking, swimming, sliding;

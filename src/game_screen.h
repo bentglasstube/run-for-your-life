@@ -27,18 +27,15 @@ class GameScreen : public Screen {
 
     typedef std::vector<boost::shared_ptr<Object>> ObjectSet;
 
-    int get_score();
-
     void spawn_rock(int x, int y);
     void spawn_fish(int x, int y);
     void spawn_seal(int x, int y);
 
     float distance, x_offset;
-    int score, spawn_timer;
-    bool dead;
+    int spawn_timer;
 
-    boost::scoped_ptr<Player> player;
     boost::scoped_ptr<Text> text;
+    Player player;
     ObjectSet objects;
     Map map;
 };

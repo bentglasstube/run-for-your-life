@@ -15,8 +15,8 @@ namespace {
 }
 
 Seal::Seal(float x, float y) : Object(x, y), vx(0), vy(0), ax(0), ay(0), bark_timer(kBarkInterval - 10) {
-  walking.reset(new AnimatedSprite("sprites", 0, 96, kWidth, kHeight, 4, 8));
-  swimming.reset(new AnimatedSprite("sprites", 0, 128, 32, 16, 4, 8));
+  walking.reset(new AnimatedSprite("sprites", 0, 48, kWidth, kHeight, 4, 8));
+  swimming.reset(new AnimatedSprite("sprites", 64, 32, 32, 16, 4, 8));
 }
 
 float __clip(const float vel, const float max) {
@@ -25,7 +25,7 @@ float __clip(const float vel, const float max) {
   return vel;
 }
 
-bool Seal::update(const unsigned int elapsed, Audio& audio, const Map::Terrain t, const float dx, const float dy) {
+void Seal::update(const unsigned int elapsed, Audio& audio, const Map::Terrain t, const float dx, const float dy) {
   float friction = 0.0;
   switch (t) {
     case Map::SNOW:
@@ -56,7 +56,7 @@ bool Seal::update(const unsigned int elapsed, Audio& audio, const Map::Terrain t
     audio.play_sample("bark");
   }
 
-  return Object::update(elapsed, audio, t, dx - vx, dy - vy);
+  Object::update(elapsed, audio, t, dx - vx, dy - vy);
 }
 
 void Seal::draw(Graphics& graphics, const Map::Terrain t) {
@@ -67,4 +67,9 @@ void Seal::draw(Graphics& graphics, const Map::Terrain t) {
   } else {
     walking->draw(graphics, x - kWidth / 2, y - kHeight / 2, flip);
   }
+}
+
+void Seal::collide(Player& player, Audio& audio) {
+  player.kill();
+  audio.play_sample("eaten");
 }

@@ -11,36 +11,33 @@
 #include "rock.h"
 #include "seal.h"
 
-#define ISA(obj, type) boost::dynamic_pointer_cast<type>(obj)
-
 namespace {
   const float kPlayerAccel = 0.0005f;
   const int kSpawnInterval = 100;
 }
 
 void GameScreen::init() {
-  player.reset(new Player());
   text.reset(new Text("text"));
-
   distance = x_offset = 0.0f;
-
   objects = ObjectSet();
 }
 
 bool GameScreen::update(Input& input, Audio& audio, Graphics&, unsigned int elapsed) {
-  if (dead) return false;
-
   float ax = 0.0f;
   if (input.key_held(SDLK_a)) ax -= kPlayerAccel;
   if (input.key_held(SDLK_d)) ax += kPlayerAccel;
-  player->set_ax(ax);
+  player.set_ax(ax);
 
   map.set_offsets(x_offset, distance);
 
-  player->update(elapsed, map.get(kPlayerX, kPlayerY), audio);
+  player.update(elapsed, map.get(kPlayerX, kPlayerY), audio);
 
-  float vx = player->get_vx();
-  float vy = player->get_vy();
+  float vx = player.get_vx();
+  float vy = player.get_vy();
+
+  if ((int)((distance + vy * elapsed) / 100) > (int)(distance / 100)) {
+    player.add_points(1);
+  }
 
   x_offset += vx * elapsed;
   distance += vy * elapsed;
@@ -49,27 +46,14 @@ bool GameScreen::update(Input& input, Audio& audio, Graphics&, unsigned int elap
   while (i != objects.end()) {
     boost::shared_ptr<Object> obj = *i;
 
-    bool keep = obj->update(elapsed, audio, map.get(obj->get_x(), obj->get_y()), vx, vy);
+    obj->update(elapsed, audio, map.get(obj->get_x(), obj->get_y()), vx, vy);
+    if (obj->is_touching(kPlayerX, kPlayerY)) obj->collide(player, audio);
 
-    if (obj->get_y() < -32) {
-      keep = false;
-    } else if (obj->is_touching(kPlayerX, kPlayerY)) {
-      if (ISA(obj, Rock)) {
-        player->trip();
-        score -= 25;
-        audio.play_sample("hit");
-      } else if (ISA(obj, Fish)) {
-        keep = false;
-        score += 100;
-        audio.play_sample("yum");
-      } else if (ISA(obj, Seal)) {
-        dead = true;
-        audio.play_sample("eaten");
-      }
+    if (obj->moribund() || obj->get_y() < -32) {
+      i = objects.erase(i);
+    } else {
+      ++i;
     }
-
-    if (keep) ++i;
-    else i = objects.erase(i);
   }
 
   spawn_timer += elapsed;
@@ -98,7 +82,7 @@ bool GameScreen::update(Input& input, Audio& audio, Graphics&, unsigned int elap
     }
   }
 
-  return true;
+  return player.alive();
 }
 
 void GameScreen::draw(Graphics& graphics) {
@@ -109,23 +93,18 @@ void GameScreen::draw(Graphics& graphics) {
     obj->draw(graphics, map.get(obj->get_x(), obj->get_y()));
   }
 
-  if (!dead) player->draw(graphics, map.get(kPlayerX, kPlayerY), kPlayerX, kPlayerY);
-
-  text->draw(graphics, boost::str(boost::format("% 9u") % get_score()), Graphics::kWidth, 0, Text::Alignment::RIGHT);
+  player.draw(graphics, map.get(kPlayerX, kPlayerY), kPlayerX, kPlayerY);
+  text->draw(graphics, boost::str(boost::format("% 9u") % player.get_score()), Graphics::kWidth, 0, Text::Alignment::RIGHT);
 }
 
 Screen* GameScreen::next_screen() {
   GameOverScreen* next = new GameOverScreen();
-  next->set_score(get_score());
+  next->set_score(player.get_score());
   return next;
 }
 
 std::string GameScreen::get_music_track() {
   return "antarcticbreeze";
-}
-
-int GameScreen::get_score() {
-  return score + (int)(distance / 100);
 }
 
 void GameScreen::spawn_rock(int x, int y) {
