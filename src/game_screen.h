@@ -31,6 +31,8 @@ class GameScreen : public Screen {
     void spawn_fish(int x, int y);
     void spawn_seal(int x, int y);
 
+    void spawn_text(int x, int y, int value);
+
     float distance, x_offset;
     int spawn_timer;
 

@@ -12,10 +12,8 @@ class Object {
 
     virtual void update(const unsigned int elapsed, Audio& audio, const Map::Terrain t, const float vx, const float vy);
     virtual void draw(Graphics& graphics, const Map::Terrain t) = 0;
-
     virtual bool is_touching(const float tx, const float ty);
-
-    virtual void collide(Player& player, Audio& audio) = 0;
+    virtual void collide(Player& player, Audio& audio);
 
     bool moribund() { return dead; }
 

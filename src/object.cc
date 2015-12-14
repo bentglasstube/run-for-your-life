@@ -16,3 +16,5 @@ bool Object::is_touching(float tx, float ty) {
   int r = (kSize + Player::kSize) / 3;
   return dx * dx + dy * dy < r * r;
 }
+
+void Object::collide(Player&, Audio&) {}

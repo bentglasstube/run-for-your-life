@@ -5,6 +5,7 @@
 
 #include "audio.h"
 #include "fish.h"
+#include "floating_text.h"
 #include "game_over_screen.h"
 #include "graphics.h"
 #include "input.h"
@@ -42,6 +43,8 @@ bool GameScreen::update(Input& input, Audio& audio, Graphics&, unsigned int elap
   x_offset += vx * elapsed;
   distance += vy * elapsed;
 
+  const int prev_score = player.get_score();
+
   ObjectSet::iterator i = objects.begin();
   while (i != objects.end()) {
     boost::shared_ptr<Object> obj = *i;
@@ -55,6 +58,9 @@ bool GameScreen::update(Input& input, Audio& audio, Graphics&, unsigned int elap
       ++i;
     }
   }
+
+  int points = player.get_score() - prev_score;
+  if (points != 0) spawn_text(kPlayerX, kPlayerY - 32, points);
 
   spawn_timer += elapsed;
   if (spawn_timer > kSpawnInterval) {
@@ -117,4 +123,8 @@ void GameScreen::spawn_fish(int x, int y) {
 
 void GameScreen::spawn_seal(int x, int y) {
   objects.push_back(boost::shared_ptr<Object>(new Seal(x, y)));
+}
+
+void GameScreen::spawn_text(int x, int y, int value) {
+  objects.push_back(boost::shared_ptr<Object>(new FloatingText(x, y, value)));
 }
