@@ -15,12 +15,16 @@
 namespace {
   const float kPlayerAccel = 0.0005f;
   const int kSpawnInterval = 100;
+  const int kSealInterval = 30000;
 }
 
 void GameScreen::init() {
   text.reset(new Text("text"));
   distance = x_offset = 0.0f;
   objects = ObjectSet();
+
+  spawn_timer = 0;
+  seal_timer = 20000;
 }
 
 bool GameScreen::update(Input& input, Audio& audio, Graphics&, unsigned int elapsed) {
@@ -86,6 +90,12 @@ bool GameScreen::update(Input& input, Audio& audio, Graphics&, unsigned int elap
         if (r < 1) spawn_seal(x, y);
         break;
     }
+  }
+
+  seal_timer += elapsed;
+  if (seal_timer > kSealInterval) {
+    seal_timer -= kSealInterval;
+    spawn_seal((rand() % 2 == 1) ? 0 : Graphics::kWidth, kPlayerY);
   }
 
   return player.alive();

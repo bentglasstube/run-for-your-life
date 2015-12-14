@@ -34,7 +34,7 @@ class GameScreen : public Screen {
     void spawn_text(int x, int y, int value);
 
     float distance, x_offset;
-    int spawn_timer;
+    int spawn_timer, seal_timer;
 
     boost::scoped_ptr<Text> text;
     Player player;
