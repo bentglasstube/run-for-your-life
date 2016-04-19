@@ -11,11 +11,14 @@ CC=clang++
 CFLAGS=-g --std=c++14 -Wall -Wextra -pedantic
 
 ifeq ($(UNAME), Linux)
+	PACKAGE=$(NAME)-linux.tgz
 	LDFLAGS=-static-libstdc++ -static-libgcc
 	LDLIBS=`sdl2-config --cflags --libs` -lSDL2_mixer -Wl,-Bstatic -lnoise
 endif
 ifeq ($(UNAME), Darwin)
-	LDLIBS=-framework SDL2 -framework SDL2_mixer -rpath @executable_path/../Frameworks -lnoise
+	PACKAGE=$(NAME)-osx.tgz
+	LDFLAGS=/usr/local/lib/libnoise.a
+	LDLIBS=-framework SDL2 -framework SDL2_mixer -rpath @executable_path/../Frameworks
 	CFLAGS+=-mmacosx-version-min=10.5
 endif
 
@@ -34,17 +37,17 @@ run: $(EXECUTABLE)
 	./$(EXECUTABLE)
 
 clean:
-	rm -rf $(BUILDDIR)
+	rm -rf $(BUILDDIR) $(APP_NAME).app $(NAME).{mkv,glc,wav} $(PACKAGE)
 
-video: ld35.mkv
+video: $(NAME).mkv
 
-ld35.mkv: ld35.glc ld35.wav
-	glc-play $< -o - -y 1 |ffmpeg -i - -i ld35.wav -acodec flac -vcodec libx264 -y $@
+$(NAME).mkv: $(NAME).glc $(NAME).wav
+	glc-play $< -o - -y 1 |ffmpeg -i - -i $(NAME).wav -acodec flac -vcodec libx264 -y $@
 
-ld35.wav: ld35.glc
+$(NAME).wav: $(NAME).glc
 	glc-play $< -a 1 -o $@
 
-ld35.glc: $(EXECUTABLE)
+$(NAME).glc: $(EXECUTABLE)
 	glc-capture -so $@ $(EXECUTABLE)
 
 $(NAME)-linux.tgz: $(EXECUTABLE)
@@ -62,6 +65,8 @@ $(NAME)-osx.tgz: dotapp
 
 dotapp: $(APP_NAME).app
 
+package: $(PACKAGE)
+
 $(APP_NAME).app: $(EXECUTABLE) launcher $(CONTENT) Info.plist
 	rm -rf $(APP_NAME).app
 	mkdir -p $(APP_NAME).app/Contents/{MacOS,Frameworks}
@@ -72,4 +77,4 @@ $(APP_NAME).app: $(EXECUTABLE) launcher $(CONTENT) Info.plist
 	cp -R /Library/Frameworks/SDL2.framework $(APP_NAME).app/Contents/Frameworks/SDL2.framework
 	cp -R /Library/Frameworks/SDL2_mixer.framework $(APP_NAME).app/Contents/Frameworks/SDL2_mixer.framework
 
-.PHONY: all clean run video dotapp
+.PHONY: all clean run video dotapp package
