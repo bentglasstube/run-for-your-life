@@ -8,7 +8,7 @@ NAME=rfyl
 APP_NAME="RUN for Your Life"
 
 CC=clang++
-CFLAGS=-g --std=c++14 -Wall -Wextra -pedantic
+CFLAGS=-O3 --std=c++14 -Wall -Wextra -pedantic
 
 ifeq ($(UNAME), Linux)
 	PACKAGE=$(NAME)-linux.tgz
