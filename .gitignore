@@ -2,4 +2,5 @@ build
 *.dll
 *.exe
 *.zip
-content/scores.txt
+*.app
+*.tgz

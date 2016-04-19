@@ -1,16 +1,25 @@
+UNAME=$(shell uname)
+
 SOURCES=$(wildcard src/*.cc)
 CONTENT=$(wildcard content/*)
 BUILDDIR=build
 OBJECTS=$(patsubst %.cc,$(BUILDDIR)/%.o,$(SOURCES))
+NAME=rfyl
+APP_NAME="RUN for Your Life"
 
 CC=clang++
-CFLAGS=-O2 -g --std=c++14
-CFLAGS+=-Wall -Wextra
-LDFLAGS=-static-libstdc++ -static-libgcc
+CFLAGS=-g --std=c++14 -Wall -Wextra -pedantic
 
-LDLIBS=`sdl2-config --cflags --libs` -lSDL2_mixer -Wl,-Bstatic -lnoise
+ifeq ($(UNAME), Linux)
+	LDFLAGS=-static-libstdc++ -static-libgcc
+	LDLIBS=`sdl2-config --cflags --libs` -lSDL2_mixer -Wl,-Bstatic -lnoise
+endif
+ifeq ($(UNAME), Darwin)
+	LDLIBS=-framework SDL2 -framework SDL2_mixer -rpath @executable_path/../Frameworks -lnoise
+	CFLAGS+=-mmacosx-version-min=10.5
+endif
 
-EXECUTABLE=$(BUILDDIR)/rfyl
+EXECUTABLE=$(BUILDDIR)/$(NAME)
 
 all: $(EXECUTABLE)
 
@@ -27,11 +36,40 @@ run: $(EXECUTABLE)
 clean:
 	rm -rf $(BUILDDIR)
 
-rfyl.tgz: $(EXECUTABLE)
-	mkdir rfyl
-	cp $(EXECUTABLE) README.md rfyl
-	cp -R content rfyl/content
-	tar zcf $@ rfyl
-	rm -rf rfyl
+video: ld35.mkv
 
-PHONY: all clean run
+ld35.mkv: ld35.glc ld35.wav
+	glc-play $< -o - -y 1 |ffmpeg -i - -i ld35.wav -acodec flac -vcodec libx264 -y $@
+
+ld35.wav: ld35.glc
+	glc-play $< -a 1 -o $@
+
+ld35.glc: $(EXECUTABLE)
+	glc-capture -so $@ $(EXECUTABLE)
+
+$(NAME)-linux.tgz: $(EXECUTABLE)
+	mkdir $(NAME)
+	cp $(EXECUTABLE) README.md $(NAME)
+	cp -R content $(NAME)/content
+	tar zcf $@ $(NAME)
+	rm -rf $(NAME)
+
+$(NAME)-osx.tgz: dotapp
+	mkdir $(NAME)
+	cp -r $(APP_NAME).app $(NAME)/.
+	tar zcf $@ $(NAME)
+	rm -rf $(NAME)
+
+dotapp: $(APP_NAME).app
+
+$(APP_NAME).app: $(EXECUTABLE) launcher $(CONTENT) Info.plist
+	rm -rf $(APP_NAME).app
+	mkdir -p $(APP_NAME).app/Contents/{MacOS,Frameworks}
+	cp $(EXECUTABLE) $(APP_NAME).app/Contents/MacOS/game
+	cp launcher $(APP_NAME).app/Contents/MacOS/launcher
+	cp -R content $(APP_NAME).app/Contents/MacOS/content
+	cp Info.plist $(APP_NAME).app/Contents/Info.plist
+	cp -R /Library/Frameworks/SDL2.framework $(APP_NAME).app/Contents/Frameworks/SDL2.framework
+	cp -R /Library/Frameworks/SDL2_mixer.framework $(APP_NAME).app/Contents/Frameworks/SDL2_mixer.framework
+
+.PHONY: all clean run video dotapp
