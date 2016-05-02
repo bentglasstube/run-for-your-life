@@ -19,7 +19,8 @@ void GameOverScreen::init() {
       char initials[4];
       int s;
 
-      fscanf(fd, "%s%d\n", &initials, &s);
+      int count = fscanf(fd, "%3s%d\n", initials, &s);
+      if (count < 2) break;
 
       if (score > s && place > 10) {
         fprintf(stderr, "Congrats, %d - %u place\n", score, i);
