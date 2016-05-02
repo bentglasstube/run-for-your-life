@@ -3,8 +3,7 @@
 #include "game.h"
 
 Graphics::Graphics() {
-  // int flags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_FULLSCREEN_DESKTOP;
-  int flags = SDL_WINDOW_OPENGL;
+  int flags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_FULLSCREEN_DESKTOP;
 
   window = SDL_CreateWindow("Ludum Dare", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, kWidth, kHeight, flags);
   renderer = SDL_CreateRenderer(window, -1, 0);
