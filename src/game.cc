@@ -12,7 +12,7 @@
 #include "title_screen.h"
 
 namespace {
-  const bool SHOW_FPS = true;
+  const bool SHOW_FPS = false;
   const unsigned int FPS = 60;
   const unsigned int MSPF = 1000 / FPS;
 }
