@@ -5,11 +5,11 @@
     <key>CFBundleExecutable</key>
     <string>launcher</string>
     <key>CFBundleIdentifier</key>
-    <string>org.eatabrick.rfyl</string>
+    <string>org.eatabrick.runforyourlife</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>CFBundleName</key>
-    <string>RUN For Your Life</string>
+    <string>Run For Your Life</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
   </dict>

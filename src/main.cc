@@ -5,7 +5,5 @@ int main(int, char**) {
   Game game;
   game.loop();
 
-  fprintf(stderr, "");
-
   return 0;
 }
