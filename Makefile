@@ -22,17 +22,17 @@ EXECUTABLE=$(BUILDDIR)/$(NAME)
 ifeq ($(UNAME), Windows)
 	PACKAGE=$(NAME)-windows-$(VERSION).zip
 	LDFLAGS=-static-libstdc++ -static-libgcc
-	LDLIBS=`$(PKG_CONFIG) sdl2 SDL2_mixer SDL2_image --cflags --libs` -Wl,-Bstatic
+	LDLIBS=`$(PKG_CONFIG) sdl2 SDL2_mixer SDL2_image --cflags --libs` -lnoise -Wl,-Bstatic
 	EXECUTABLE=$(BUILDDIR)/$(NAME).exe
 endif
 ifeq ($(UNAME), Linux)
 	PACKAGE=$(NAME)-linux-$(VERSION).AppImage
 	LDFLAGS=-static-libstdc++ -static-libgcc
-	LDLIBS=`$(PKG_CONFIG) sdl2 SDL2_mixer SDL2_image --cflags --libs` -Wl,-Bstatic
+	LDLIBS=`$(PKG_CONFIG) sdl2 SDL2_mixer SDL2_image --cflags --libs` -lnoise -Wl,-Bstatic
 endif
 ifeq ($(UNAME), Darwin)
 	PACKAGE=$(NAME)-macos-$(VERSION).dmg
-	LDLIBS=-framework SDL2 -framework SDL2_mixer -framework SDL2_image -rpath @executable_path/../Frameworks -F /Library/Frameworks/
+	LDLIBS=-framework SDL2 -framework SDL2_mixer -framework SDL2_image -rpath @executable_path/../Frameworks -F /Library/Frameworks/ -lnoise
 	CFLAGS+=-mmacosx-version-min=10.9
 endif
 

@@ -17,7 +17,7 @@ Map::Terrain Map::get(int x, int y) {
   const float nx = (x + xo) / kDrawScale * kDrawScale / kNoiseScale;
   const float ny = (y + yo) / kDrawScale * kDrawScale / kNoiseScale;
 
-  const float n = stb_perlin_turbulence_noise3(nx, ny, seed, 2.0f, 0.5f, 6);
+  const float n = perlin.GetValue(nx, ny, seed);
 
   const float snow = ny * kNoiseScale / 50000.0f;
   const float ice  = ny * kNoiseScale / 125000.0f - 0.75f;
