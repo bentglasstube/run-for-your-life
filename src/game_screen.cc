@@ -1,7 +1,8 @@
 #include "game_screen.h"
 
-#include <boost/format.hpp>
 #include <math.h>
+#include <iomanip>
+#include <sstream>
 
 #include "audio.h"
 #include "fish.h"
@@ -51,7 +52,7 @@ bool GameScreen::update(Input& input, Audio& audio, Graphics&, unsigned int elap
 
   ObjectSet::iterator i = objects.begin();
   while (i != objects.end()) {
-    boost::shared_ptr<Object> obj = *i;
+    std::shared_ptr<Object> obj = *i;
 
     obj->update(elapsed, audio, map.get(obj->get_x(), obj->get_y()), vx, vy);
     if (obj->is_touching(kPlayerX, kPlayerY)) obj->collide(player, audio);
@@ -105,12 +106,15 @@ void GameScreen::draw(Graphics& graphics) {
   map.draw(graphics);
 
   for (ObjectSet::iterator i = objects.begin(); i != objects.end(); ++i) {
-    boost::shared_ptr<Object> obj = *i;
+    std::shared_ptr<Object> obj = *i;
     obj->draw(graphics, map.get(obj->get_x(), obj->get_y()));
   }
 
   player.draw(graphics, map.get(kPlayerX, kPlayerY), kPlayerX, kPlayerY);
-  text->draw(graphics, boost::str(boost::format("% 9u") % player.get_score()), Graphics::kWidth, 0, Text::Alignment::RIGHT);
+
+  std::ostringstream out;
+  out << ' ' << std::setfill(' ') << std::setw(9) << player.get_score();
+  text->draw(graphics, out.str(), Graphics::kWidth, 0, Text::Alignment::RIGHT);
 }
 
 Screen* GameScreen::next_screen() {
@@ -124,17 +128,17 @@ std::string GameScreen::get_music_track() {
 }
 
 void GameScreen::spawn_rock(int x, int y) {
-  objects.push_back(boost::shared_ptr<Object>(new Rock(x, y)));
+  objects.push_back(std::shared_ptr<Object>(new Rock(x, y)));
 }
 
 void GameScreen::spawn_fish(int x, int y) {
-  objects.push_back(boost::shared_ptr<Object>(new Fish(x, y)));
+  objects.push_back(std::shared_ptr<Object>(new Fish(x, y)));
 }
 
 void GameScreen::spawn_seal(int x, int y) {
-  objects.push_back(boost::shared_ptr<Object>(new Seal(x, y)));
+  objects.push_back(std::shared_ptr<Object>(new Seal(x, y)));
 }
 
 void GameScreen::spawn_text(int x, int y, int value) {
-  objects.push_back(boost::shared_ptr<Object>(new FloatingText(x, y, value)));
+  objects.push_back(std::shared_ptr<Object>(new FloatingText(x, y, value)));
 }

@@ -1,8 +1,10 @@
 #include "game_over_screen.h"
 
-#include <boost/format.hpp>
 #include <stdio.h>
 #include <string.h>
+
+#include <iomanip>
+#include <sstream>
 
 #include "game_screen.h"
 
@@ -78,12 +80,20 @@ bool GameOverScreen::update(Input& input, Audio&, Graphics&, unsigned int) {
   return true;
 }
 
+std::string GameOverScreen::format_score(int n, HighScore score) {
+  std::ostringstream out;
+  out << std::setfill(' ') << std::setw(2) << n << ' ';
+  out << std::setw(3) << score.initials << ' ';
+  out << std::setw(9) << score.score;
+  return out.str();
+}
+
 void GameOverScreen::draw(Graphics& graphics) {
   backdrop->draw(graphics);
 
   for (int i = 0; i < 5; ++i) {
-    text->draw(graphics, boost::str(boost::format("%2u %3s %9u") % (i + 1) % top_scores[i].initials % top_scores[i].score), 184, 208 + 16 * i);
-    text->draw(graphics, boost::str(boost::format("%2u %3s %9u") % (i + 6) % top_scores[i + 5].initials % top_scores[i + 5].score), 320, 208 + 16 * i);
+    text->draw(graphics, format_score(i, top_scores[i]), 184, 208 + 16 * i);
+    text->draw(graphics, format_score(i + 5, top_scores[i + 5]), 320, 208 + 16 * i);
   }
 
   if (entering_name()) {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 
 #include "object.h"
 #include "sprite.h"
@@ -14,5 +14,5 @@ class Rock : public Object {
     void collide(Player& player, Audio& audio);
 
   private:
-    boost::scoped_ptr<Sprite> sprite;
+    std::unique_ptr<Sprite> sprite;
 };

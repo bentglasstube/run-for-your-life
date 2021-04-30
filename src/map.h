@@ -1,8 +1,6 @@
 #pragma once
 
-#include <boost/shared_ptr.hpp>
 #include <map>
-#include <noise/noise.h>
 
 #include "graphics.h"
 
@@ -21,5 +19,4 @@ class Map {
   private:
 
     int xo, yo, seed;
-    noise::module::Perlin perlin;
 };

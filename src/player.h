@@ -1,6 +1,6 @@
 #pragma once
 
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 
 #include "audio.h"
 #include "map.h"
@@ -38,5 +38,5 @@ class Player {
     int score;
     Map::Terrain last_tile;
 
-    boost::scoped_ptr<Sprite> walking, swimming, sliding;
+    std::unique_ptr<Sprite> walking, swimming, sliding;
 };

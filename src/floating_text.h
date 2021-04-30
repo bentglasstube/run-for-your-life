@@ -1,6 +1,6 @@
 #pragma once
 
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 
 #include "object.h"
 #include "text.h"
@@ -15,6 +15,6 @@ class FloatingText : public Object {
 
   private:
 
-    boost::scoped_ptr<Text> text;
+    std::unique_ptr<Text> text;
     int value, life_timer;
 };

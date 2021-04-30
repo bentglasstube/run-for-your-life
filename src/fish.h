@@ -1,6 +1,6 @@
 #pragma once
 
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 
 #include "object.h"
 #include "sprite.h"
@@ -18,7 +18,7 @@ class Fish : public Object {
 
     float dx, dy;
     int color;
-    boost::scoped_ptr<Sprite> sprite;
+    std::unique_ptr<Sprite> sprite;
 
     int value();
 };

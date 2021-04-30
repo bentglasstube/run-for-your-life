@@ -1,6 +1,6 @@
 #pragma once
 
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 
 #include "object.h"
 #include "sprite.h"
@@ -19,7 +19,7 @@ class Seal : public Object {
     float ax, ay;
     int bark_timer;
 
-    boost::scoped_ptr<Sprite> walking, swimming;
+    std::unique_ptr<Sprite> walking, swimming;
 
     bool facing_left() { return vx < 0; }
 };

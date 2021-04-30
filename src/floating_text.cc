@@ -1,6 +1,6 @@
 #include "floating_text.h"
 
-#include <boost/format.hpp>
+#include <sstream>
 
 namespace {
   const float kFloatVel = 0.005f;
@@ -19,6 +19,8 @@ void FloatingText::update(const unsigned int elapsed, Audio& audio, const Map::T
 }
 
 void FloatingText::draw(Graphics& graphics, const Map::Terrain) {
-  text->draw(graphics, boost::str(boost::format("+%d") % value), x, y, Text::CENTER);
+  std::ostringstream out;
+  out << "+" << std::fixed << value;
+  text->draw(graphics, out.str(), x, y, Text::CENTER);
 }
 

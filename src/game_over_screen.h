@@ -1,6 +1,6 @@
 #pragma once
 
-#include <boost/scoped_ptr.hpp>
+#include <memory>
 
 #include "audio.h"
 #include "backdrop.h"
@@ -33,9 +33,10 @@ class GameOverScreen : public Screen {
     char initial = 'A';
 
     HighScore top_scores[10];
+    std::string format_score(int n, HighScore score);
 
-    boost::scoped_ptr<Backdrop> backdrop;
-    boost::scoped_ptr<Text> text;
+    std::unique_ptr<Backdrop> backdrop;
+    std::unique_ptr<Text> text;
 
     bool entering_name();
 };

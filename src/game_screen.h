@@ -1,7 +1,6 @@
 #pragma once
 
-#include <boost/scoped_ptr.hpp>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <vector>
 
 #include "map.h"
@@ -25,7 +24,7 @@ class GameScreen : public Screen {
 
   private:
 
-    typedef std::vector<boost::shared_ptr<Object>> ObjectSet;
+    typedef std::vector<std::shared_ptr<Object>> ObjectSet;
 
     void spawn_rock(int x, int y);
     void spawn_fish(int x, int y);
@@ -36,7 +35,7 @@ class GameScreen : public Screen {
     float distance, x_offset;
     int spawn_timer, seal_timer;
 
-    boost::scoped_ptr<Text> text;
+    std::unique_ptr<Text> text;
     Player player;
     ObjectSet objects;
     Map map;

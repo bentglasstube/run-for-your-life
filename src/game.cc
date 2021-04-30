@@ -1,6 +1,5 @@
 #include "game.h"
 
-#include <boost/format.hpp>
 #include <SDL2/SDL.h>
 #include <stdlib.h>
 #include <time.h>
@@ -12,7 +11,6 @@
 #include "title_screen.h"
 
 namespace {
-  const bool SHOW_FPS = false;
   const unsigned int FPS = 60;
   const unsigned int MSPF = 1000 / FPS;
 }
@@ -50,11 +48,6 @@ void Game::loop() {
 
       graphics.clear();
       screen->draw(graphics);
-
-      if (SHOW_FPS) {
-        const float fps = 1000.0f / frame_ticks;
-        text.draw(graphics, boost::str(boost::format("%.1f") % fps), 640, 464, Text::RIGHT);
-      }
 
       graphics.flip();
 
