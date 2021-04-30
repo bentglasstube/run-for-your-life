@@ -2,8 +2,11 @@
 
 #include <memory>
 
+#include "audio.h"
+#include "graphics.h"
+#include "input.h"
+
 class Screen;
-class Graphics;
 
 class Game {
   public:
@@ -12,8 +15,16 @@ class Game {
     ~Game();
 
     void loop();
+    void start();
+    void step();
 
   private:
 
+    Graphics graphics;
+    Audio audio;
+    Input input;
+
     std::unique_ptr<Screen> screen;
+
+    unsigned int last_update;
 };
