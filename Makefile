@@ -3,7 +3,7 @@ ifeq ($(UNAME), Windows)
 	CROSS=x86_64-w64-mingw32.static-
 endif
 
-SOURCES=$(wildcard src/*.cc)
+SOURCES=$(wildcard *.cc)
 CONTENT=$(wildcard content/*)
 BUILDDIR=$(CROSS)output
 OBJECTS=$(patsubst %.cc,$(BUILDDIR)/%.o,$(SOURCES))
@@ -52,7 +52,7 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) $(LDLIBS)
 
 $(BUILDDIR)/%.o: %.cc
-	@mkdir -p $(BUILDDIR)/src
+	@mkdir -p $(BUILDDIR)/
 	$(CC) -c $(CFLAGS) -o $@ $<
 
 package: $(PACKAGE)

@@ -3,7 +3,6 @@
 #include <math.h>
 
 #include "animated_sprite.h"
-#include "game_screen.h"
 
 namespace {
   const int kWidth = 48;
@@ -44,8 +43,8 @@ void Seal::update(const unsigned int elapsed, Audio& audio, const Map::Terrain t
     vy *= friction;
   }
 
-  ax = GameScreen::kPlayerX < x ? -kMaxAcc : kMaxAcc;
-  ay = GameScreen::kPlayerY < y ? -kMaxAcc : kMaxAcc;
+  ax = (Graphics::kWidth / 2) < x ? -kMaxAcc : kMaxAcc;
+  ay = (Graphics::kHeight / 2) < y ? -kMaxAcc : kMaxAcc;
 
   vx = __clip(vx + ax * elapsed, kMaxVel);
   vy = __clip(vy + ay * elapsed, kMaxVel);

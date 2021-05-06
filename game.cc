@@ -31,7 +31,10 @@ void Game::step() {
   const unsigned int start = SDL_GetTicks();
 
   if (!audio.music_playing()) audio.play_music(screen->get_music_track());
-  if (!screen->process_input(input)) return;
+  if (!screen->process_input(input)) {
+    screen.reset();
+    return;
+  }
 
   const unsigned int update = SDL_GetTicks();
   const unsigned int frame_ticks = update - last_update;
@@ -59,5 +62,5 @@ void Game::step() {
 
 void Game::loop() {
   start();
-  while (true) step();
+  while (screen) step();
 }
