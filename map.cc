@@ -9,15 +9,14 @@ namespace {
 }
 
 Map::Map() : xo(0), yo(0) {
-  seed = rand();
+  seed = rand() / (float)RAND_MAX;
 }
 
 Map::Terrain Map::get(int x, int y) {
-  // Integer division here aligns the values to prevent flickering
   const float nx = (x + xo) / kDrawScale * kDrawScale / kNoiseScale;
   const float ny = (y + yo) / kDrawScale * kDrawScale / kNoiseScale;
 
-  const float n = perlin.GetValue(nx, ny, seed);
+  const float n = stb_perlin_fbm_noise3(nx, ny, seed, 2.0f, 0.5f, 6);
 
   const float snow = ny * kNoiseScale / 50000.0f;
   const float ice  = ny * kNoiseScale / 125000.0f - 0.75f;
@@ -32,9 +31,9 @@ void Map::draw(Graphics& graphics) {
   const int dy = fmodf(yo * kDrawScale, kDrawScale);
 
   for (int y = 0; y <= Graphics::kHeight; y += kDrawScale) {
+    const int ry = y - dy;
     for (int x = 0; x <= Graphics::kWidth; x += kDrawScale) {
-      int rx = x - dx;
-      int ry = y - dy;
+      const int rx = x - dx;
 
       Terrain t = get(rx, ry);
 
