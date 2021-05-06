@@ -1,13 +1,15 @@
 #include "graphics.h"
 
 Graphics::Graphics() {
-  int flags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
+  const int flags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
 
-  window = SDL_CreateWindow("Run For Your Life", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, kWidth, kHeight, flags);
+  window = SDL_CreateWindow("Run For Your Life", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, kWidth * 2, kHeight * 2, flags);
   renderer = SDL_CreateRenderer(window, -1, 0);
 
   SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest"); // retro!
   SDL_RenderSetLogicalSize(renderer, kWidth, kHeight);
+  SDL_RenderSetIntegerScale(renderer, SDL_TRUE);
+  SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 }
 
 Graphics::~Graphics() {
