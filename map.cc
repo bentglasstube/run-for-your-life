@@ -8,9 +8,7 @@ namespace {
   const float kNoiseScale = 500.0f;
 }
 
-Map::Map() : xo(0), yo(0) {
-  seed = rand() / (float)RAND_MAX;
-}
+Map::Map() : xo(0), yo(0), seed(rand() % 256) {}
 
 Map::Terrain Map::get(int x, int y) {
   const float nx = (x + xo) / kDrawScale * kDrawScale / kNoiseScale;
@@ -27,25 +25,22 @@ Map::Terrain Map::get(int x, int y) {
 }
 
 void Map::draw(Graphics& graphics) {
-  const int dx = fmodf(xo * kDrawScale, kDrawScale);
-  const int dy = fmodf(yo * kDrawScale, kDrawScale);
+  const int dx = xo % kDrawScale + (xo < 0 ? kDrawScale : 0);
+  const int dy = yo % kDrawScale;
 
-  for (int y = 0; y <= Graphics::kHeight; y += kDrawScale) {
-    const int ry = y - dy;
-    for (int x = 0; x <= Graphics::kWidth; x += kDrawScale) {
-      const int rx = x - dx;
-
-      Terrain t = get(rx, ry);
+  for (int y = -dy; y <= Graphics::kHeight; y += kDrawScale) {
+    for (int x = -dx; x <= Graphics::kWidth; x += kDrawScale) {
+      Terrain t = get(x, y);
 
       switch (t) {
         case SNOW:
-          graphics.rect(rx, ry, kDrawScale, kDrawScale, 255, 255, 255);
+          graphics.rect(x, y, kDrawScale, kDrawScale, 255, 255, 255);
           break;
         case ICE:
-          graphics.rect(rx, ry, kDrawScale, kDrawScale, 95, 205, 228);
+          graphics.rect(x, y, kDrawScale, kDrawScale, 95, 205, 228);
           break;
         case WATER:
-          graphics.rect(rx, ry, kDrawScale, kDrawScale, 91, 110, 225);
+          graphics.rect(x, y, kDrawScale, kDrawScale, 91, 110, 225);
           break;
       }
     }

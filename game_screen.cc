@@ -1,6 +1,5 @@
 #include "game_screen.h"
 
-#include <math.h>
 #include <iomanip>
 #include <sstream>
 

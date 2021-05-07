@@ -18,7 +18,6 @@ class Graphics {
     void clear();
 
     void rect(int x, int y, int w, int h, Uint8 r, Uint8 g, Uint8 b);
-    void pixel(int x, int y, Uint8 r, Uint8 g, Uint8 b);
 
     SDL_Texture* load_image(const std::string& file);
 
