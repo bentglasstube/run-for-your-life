@@ -20,11 +20,10 @@ class Game {
 
   private:
 
-    Graphics graphics;
+    std::unique_ptr<Screen> screen;
+    std::unique_ptr<Graphics> graphics;
     Audio audio;
     Input input;
-
-    std::unique_ptr<Screen> screen;
 
     unsigned int last_update;
 };

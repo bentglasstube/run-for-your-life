@@ -23,6 +23,7 @@ Game::~Game() {
 void Game::start() {
   last_update = SDL_GetTicks();
 
+  graphics.reset(new Graphics());
   screen.reset(new TitleScreen());
   screen->init();
 }
@@ -38,12 +39,12 @@ void Game::step() {
 
   const unsigned int update = SDL_GetTicks();
   const unsigned int frame_ticks = update - last_update;
-  if (screen->update(input, audio, graphics, frame_ticks)) {
+  if (screen->update(input, audio, static_cast<Graphics&>(*graphics), frame_ticks)) {
 
-    graphics.clear();
-    screen->draw(graphics);
+    graphics->clear();
+    screen->draw(static_cast<Graphics&>(*graphics));
 
-    graphics.flip();
+    graphics->flip();
 
   } else {
 
