@@ -7,7 +7,7 @@ AnimatedSprite::AnimatedSprite(
   Sprite(file, x, y, w, h), bx(x),
   count(frames), start(0), fps(fps), loop(loop) {}
 
-void AnimatedSprite::draw(Graphics& graphics, int x, int y, SDL_RendererFlip flip) {
+void AnimatedSprite::draw(Graphics& graphics, int x, int y, Graphics::FlipDirection flip) {
   if (start == 0) start = SDL_GetTicks();
 
   const unsigned int max = loop == NORMAL ? count : 2 * count - 2;

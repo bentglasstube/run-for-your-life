@@ -59,7 +59,7 @@ void Seal::update(const unsigned int elapsed, Audio& audio, const Map::Terrain t
 }
 
 void Seal::draw(Graphics& graphics, const Map::Terrain t) {
-  SDL_RendererFlip flip = facing_left() ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+  Graphics::FlipDirection flip = facing_left() ? Graphics::HORIZONTAL : Graphics::NONE;
 
   if (t == Map::WATER) {
     swimming->draw(graphics, x - kWidth / 2, y - kHeight / 2, flip);

@@ -9,7 +9,7 @@ Sprite::Sprite(const std::string& file, int x, int y, int w, int h) : file(file)
   rect.h = h;
 }
 
-void Sprite::draw(Graphics& graphics, int x, int y, SDL_RendererFlip flip) {
+void Sprite::draw(Graphics& graphics, int x, int y, Graphics::FlipDirection flip) {
   SDL_Rect dest;
 
   dest.x = x;

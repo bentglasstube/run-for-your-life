@@ -40,7 +40,7 @@ void Fish::update(const unsigned int elapsed, Audio& audio, const Map::Terrain t
 }
 
 void Fish::draw(Graphics& graphics, const Map::Terrain) {
-  SDL_RendererFlip flip = dx > 0 ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+  Graphics::FlipDirection flip = dx > 0 ? Graphics::HORIZONTAL : Graphics::NONE;
   sprite->draw(graphics, x - kSize / 2, y - kSize / 2, flip);
 }
 

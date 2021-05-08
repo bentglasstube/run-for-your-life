@@ -21,9 +21,24 @@ Graphics::~Graphics() {
   SDL_DestroyWindow(window);
 }
 
-void Graphics::blit(const std::string& file, const SDL_Rect* srect, const SDL_Rect* drect, const SDL_RendererFlip flip) {
+void Graphics::blit(const std::string& file, const SDL_Rect* srect, const SDL_Rect* drect, FlipDirection flip) {
+  SDL_RendererFlip f = SDL_FLIP_NONE;
+  switch (flip) {
+    case HORIZONTAL:
+      f = SDL_FLIP_HORIZONTAL;
+      break;
+    case VERTICAL:
+      f = SDL_FLIP_VERTICAL;
+      break;
+    case BOTH:
+      f = (SDL_RendererFlip) (SDL_FLIP_VERTICAL | SDL_FLIP_HORIZONTAL);
+      break;
+    case NONE:
+      f = (SDL_RendererFlip) 0;
+      break;
+  }
   SDL_Texture* texture = load_image(file);
-  SDL_RenderCopyEx(renderer, texture, srect, drect, 0, NULL, flip);
+  SDL_RenderCopyEx(renderer, texture, srect, drect, 0.0f, NULL, f);
 }
 
 void Graphics::flip() {
@@ -35,10 +50,10 @@ void Graphics::clear() {
   SDL_RenderClear(renderer);
 }
 
-void Graphics::rect(int x, int y, int w, int h, Uint8 r, Uint8 g, Uint8 b) {
-  SDL_Rect rect = { x, y, w, h };
-  SDL_SetRenderDrawColor(renderer, r, g, b, 255);
-  SDL_RenderFillRect(renderer, &rect);
+void Graphics::rect(int x, int y, int w, int h, Uint8 red, Uint8 green, Uint8 blue) {
+  SDL_Rect r = {x, y, w, h};
+  SDL_SetRenderDrawColor(renderer, red, green, blue, 255);
+  SDL_RenderFillRect(renderer, &r);
 }
 
 SDL_Texture* Graphics::load_image(const std::string& file) {
